@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - File System Browser</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    /* File Browser */
+    .file-browser {
+      border: var(--border-thick) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      height: 28rem;
+      display: grid;
+      grid-template-columns: 16rem 1fr;
+    }
+    
+    .file-tree {
+      border-right: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .file-tree::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .tree-header {
+      background-color: var(--fine-use-border);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    .tree-item {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-lg);
+      cursor: pointer;
+      color: var(--fine-use-comment);
+      font-size: var(--text-md);
+      border-bottom: 1px solid var(--fine-use-border);
+      transition: all var(--transition-fast);
+    }
+    
+    .tree-item:hover {
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+    }
+    
+    .tree-item.selected {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+    }
+    
+    .tree-icon {
+      margin-right: var(--space-sm);
+      font-weight: 700;
+      width: 1rem;
+    }
+    
+    .folder-icon { color: var(--fine-use-warning); }
+    .file-icon { color: var(--fine-use-comment); }
+    
+    .tree-indent-1 { padding-left: 2rem; }
+    .tree-indent-2 { padding-left: 3rem; }
+    .tree-indent-3 { padding-left: 4rem; }
+    
+    .file-details {
+      padding: var(--space-lg);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .file-details::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .details-header {
+      background-color: var(--fine-use-border);
+      padding: var(--space-md) var(--space-lg);
+      margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-lg) calc(-1 * var(--space-lg));
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    .file-info {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .info-label {
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    .info-value {
+      color: var(--fine-use-comment);
+    }
+    
+    .file-preview {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      padding: var(--space-lg);
+      margin-top: var(--space-lg);
+      font-size: var(--text-sm);
+      line-height: 1.4;
+      max-height: 12rem;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .file-preview::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Permissions Display */
+    .permissions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    
+    .permission-group {
+      border: var(--border-thin) solid var(--fine-use-border);
+      padding: var(--space-sm);
+      text-align: center;
+    }
+    
+    .permission-label {
+      font-size: var(--text-xs);
+      color: var(--fine-use-comment);
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .permission-value {
+      font-weight: 700;
+      color: var(--fine-use-text);
+    }
+    
+    .permission-rwx {
+      font-size: var(--text-xs);
+      color: var(--fine-use-accent);
+      margin-top: var(--space-xs);
+    }
+    
+    /* File Operations */
+    .file-operations {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    
+    .operation-button {
+      padding: var(--space-sm) var(--space-md);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-transform: uppercase;
+    }
+    
+    .operation-button:hover {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+    }
+    
+    /* Directory Size Visualization */
+    .size-blocks {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 2px;
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+    }
+    
+    .size-block {
+      aspect-ratio: 1;
+      border: 1px solid var(--fine-use-border);
+    }
+    
+    .size-small { background-color: var(--fine-use-success); }
+    .size-medium { background-color: var(--fine-use-warning); }
+    .size-large { background-color: var(--fine-use-error); }
+    .size-empty { background-color: var(--fine-use-border); }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">FILE SYSTEM BROWSER</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">COMPONENT TYPE:</span>
+        <span class="text-accent">FILE MANAGEMENT</span>
+        <span class="text-comment">CURRENT PATH:</span>
+        <span class="text-success">/usr/local/bin</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-info">BROWSING</span>
+      </div>
+    </header>
+
+    <!-- File Browser -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">DIRECTORY TREE BROWSER</h2>
+      
+      <div class="file-browser">
+        <div class="file-tree">
+          <div class="tree-header">DIRECTORY STRUCTURE</div>
+          <div class="tree-item selected" data-file="/" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>/</span>
+          </div>
+          <div class="tree-item tree-indent-1" data-file="/usr" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>usr</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/usr/local" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>local</span>
+          </div>
+          <div class="tree-item tree-indent-3" data-file="/usr/local/bin" data-type="folder">
+            <span class="tree-icon folder-icon">📂</span>
+            <span>bin</span>
+          </div>
+          <div class="tree-item tree-indent-3" data-file="/usr/local/lib" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>lib</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/usr/bin" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>bin</span>
+          </div>
+          <div class="tree-item tree-indent-1" data-file="/var" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>var</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/var/log" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>log</span>
+          </div>
+          <div class="tree-item tree-indent-3" data-file="/var/log/httpd" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>httpd</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/var/www" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>www</span>
+          </div>
+          <div class="tree-item tree-indent-3" data-file="/var/www/html" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>html</span>
+          </div>
+          <div class="tree-item tree-indent-1" data-file="/etc" data-type="folder">
+            <span class="tree-icon folder-icon">📁</span>
+            <span>etc</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/etc/httpd.conf" data-type="file">
+            <span class="tree-icon file-icon">📄</span>
+            <span>httpd.conf</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/etc/passwd" data-type="file">
+            <span class="tree-icon file-icon">📄</span>
+            <span>passwd</span>
+          </div>
+          <div class="tree-item tree-indent-2" data-file="/etc/hosts" data-type="file">
+            <span class="tree-icon file-icon">📄</span>
+            <span>hosts</span>
+          </div>
+        </div>
+        
+        <div class="file-details">
+          <div class="details-header" id="details-header">ROOT DIRECTORY</div>
+          
+          <div class="file-info" id="file-info">
+            <div class="info-label">TYPE:</div>
+            <div class="info-value" id="file-type">Directory</div>
+            
+            <div class="info-label">SIZE:</div>
+            <div class="info-value" id="file-size">4.0 KB</div>
+            
+            <div class="info-label">MODIFIED:</div>
+            <div class="info-value" id="file-modified">2024-12-15 14:23:17</div>
+            
+            <div class="info-label">OWNER:</div>
+            <div class="info-value" id="file-owner">root:root</div>
+            
+            <div class="info-label">PERMISSIONS:</div>
+            <div class="info-value" id="file-perms">drwxr-xr-x (755)</div>
+          </div>
+          
+          <div class="permissions-grid">
+            <div class="permission-group">
+              <div class="permission-label">Owner</div>
+              <div class="permission-value">7</div>
+              <div class="permission-rwx">rwx</div>
+            </div>
+            <div class="permission-group">
+              <div class="permission-label">Group</div>
+              <div class="permission-value">5</div>
+              <div class="permission-rwx">r-x</div>
+            </div>
+            <div class="permission-group">
+              <div class="permission-label">Other</div>
+              <div class="permission-value">5</div>
+              <div class="permission-rwx">r-x</div>
+            </div>
+          </div>
+          
+          <div class="file-operations">
+            <button class="operation-button">COPY</button>
+            <button class="operation-button">MOVE</button>
+            <button class="operation-button">DELETE</button>
+            <button class="operation-button">EDIT</button>
+            <button class="operation-button">PROPERTIES</button>
+          </div>
+          
+          <div class="file-preview" id="file-preview">
+            <div style="color: var(--fine-use-comment); text-align: center; padding: var(--space-xl);">
+              Select a file to preview its contents
+            </div>
+          </div>
+          
+          <div>
+            <h4 style="color: var(--fine-use-text); margin: var(--space-lg) 0 var(--space-md) 0; text-transform: uppercase;">DIRECTORY SIZE VISUALIZATION</h4>
+            <div class="size-blocks" id="size-blocks">
+              <!-- Populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // File data
+    const fileData = {
+      '/': {
+        type: 'Directory',
+        size: '4.0 KB',
+        modified: '2024-12-15 14:23:17',
+        owner: 'root:root',
+        permissions: 'drwxr-xr-x (755)',
+        preview: 'Root directory contains system folders and files.\nContains: usr, var, etc, home, opt, tmp'
+      },
+      '/usr': {
+        type: 'Directory',
+        size: '2.3 GB',
+        modified: '2024-12-15 12:45:33',
+        owner: 'root:root',
+        permissions: 'drwxr-xr-x (755)',
+        preview: 'User programs and utilities directory.\nContains: bin, lib, local, share, src'
+      },
+      '/usr/local': {
+        type: 'Directory',
+        size: '156 MB',
+        modified: '2024-12-14 16:20:11',
+        owner: 'root:root',
+        permissions: 'drwxr-xr-x (755)',
+        preview: 'Local installation directory for custom software.\nContains: bin, lib, share, man'
+      },
+      '/usr/local/bin': {
+        type: 'Directory',
+        size: '45 MB',
+        modified: '2024-12-14 09:15:42',
+        owner: 'root:root',
+        permissions: 'drwxr-xr-x (755)',
+        preview: 'Local executable binaries directory.\nContains custom compiled programs and scripts.'
+      },
+      '/var': {
+        type: 'Directory',
+        size: '8.7 GB',
+        modified: '2024-12-15 14:22:58',
+        owner: 'root:root',
+        permissions: 'drwxr-xr-x (755)',
+        preview: 'Variable data directory for logs, databases, caches.\nContains: log, www, mail, spool'
+      },
+      '/var/log': {
+        type: 'Directory',
+        size: '3.2 GB',
+        modified: '2024-12-15 14:22:58',
+        owner: 'root:adm',
+        permissions: 'drwxr-xr-x (755)',
+        preview: 'System and application log files.\nContains: httpd, mysql, auth.log, kern.log'
+      },
+      '/etc/httpd.conf': {
+        type: 'Configuration File',
+        size: '12.4 KB',
+        modified: '2024-12-10 08:30:15',
+        owner: 'root:root',
+        permissions: '-rw-r--r-- (644)',
+        preview: '# Apache HTTP Server Configuration\n# Main configuration file\n\nServerRoot "/usr/local/apache2"\nListen 80\nListen 443\n\nLoadModule rewrite_module modules/mod_rewrite.so\nLoadModule ssl_module modules/mod_ssl.so\n\nServerName localhost:80\nDocumentRoot "/var/www/html"\n\n<Directory "/var/www/html">\n    Options Indexes FollowSymLinks\n    AllowOverride All\n    Require all granted\n</Directory>\n\nErrorLog "logs/error_log"\nCustomLog "logs/access_log" common'
+      },
+      '/etc/passwd': {
+        type: 'System File',
+        size: '2.1 KB',
+        modified: '2024-12-12 11:45:20',
+        owner: 'root:root',
+        permissions: '-rw-r--r-- (644)',
+        preview: 'root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\nmysql:x:112:117:MySQL Server:/nonexistent:/bin/false\napache:x:113:118:Apache:/var/www:/bin/false\nsshd:x:114:65534::/run/sshd:/usr/sbin/nologin'
+      },
+      '/etc/hosts': {
+        type: 'Configuration File',
+        size: '243 bytes',
+        modified: '2024-12-08 15:22:33',
+        owner: 'root:root',
+        permissions: '-rw-r--r-- (644)',
+        preview: '127.0.0.1\tlocalhost\n127.0.1.1\tserver.local\tserver\n\n# Production servers\n192.168.1.10\tdb-server\n192.168.1.11\tweb-server\n192.168.1.12\tcache-server\n\n# Development\n10.0.0.50\tdev-api\n10.0.0.51\tdev-web\n\n::1\tip6-localhost ip6-loopback'
+      }
+    };
+
+    // File browser functionality
+    document.querySelectorAll('.tree-item').forEach(item => {
+      item.addEventListener('click', () => {
+        // Remove previous selection
+        document.querySelectorAll('.tree-item').forEach(i => i.classList.remove('selected'));
+        
+        // Select current item
+        item.classList.add('selected');
+        
+        // Get file data
+        const filePath = item.dataset.file;
+        const fileInfo = fileData[filePath];
+        
+        if (fileInfo) {
+          updateFileDetails(filePath, fileInfo);
+        }
+      });
+    });
+
+    function updateFileDetails(path, info) {
+      document.getElementById('details-header').textContent = path.toUpperCase();
+      document.getElementById('file-type').textContent = info.type;
+      document.getElementById('file-size').textContent = info.size;
+      document.getElementById('file-modified').textContent = info.modified;
+      document.getElementById('file-owner').textContent = info.owner;
+      document.getElementById('file-perms').textContent = info.permissions;
+      
+      // Update preview
+      const preview = document.getElementById('file-preview');
+      preview.innerHTML = `<pre style="color: var(--fine-use-text); font-size: var(--text-sm); line-height: 1.4; white-space: pre-wrap;">${info.preview}</pre>`;
+      
+      // Update permissions display
+      updatePermissionsDisplay(info.permissions);
+      
+      // Generate size visualization
+      generateSizeVisualization(info.size);
+    }
+
+    function updatePermissionsDisplay(perms) {
+      // Extract numeric permissions (e.g., "755" from "drwxr-xr-x (755)")
+      const numericMatch = perms.match(/\((\d{3})\)/);
+      if (numericMatch) {
+        const [owner, group, other] = numericMatch[1].split('').map(Number);
+        
+        const permGroups = document.querySelectorAll('.permission-group');
+        const permissions = [owner, group, other];
+        
+        permissions.forEach((perm, index) => {
+          const valueEl = permGroups[index].querySelector('.permission-value');
+          const rwxEl = permGroups[index].querySelector('.permission-rwx');
+          
+          valueEl.textContent = perm;
+          
+          // Convert to rwx notation
+          const r = (perm & 4) ? 'r' : '-';
+          const w = (perm & 2) ? 'w' : '-';
+          const x = (perm & 1) ? 'x' : '-';
+          rwxEl.textContent = r + w + x;
+        });
+      }
+    }
+
+    function generateSizeVisualization(sizeStr) {
+      const sizeBlocks = document.getElementById('size-blocks');
+      const blocks = [];
+      
+      // Convert size to a visualization (simplified)
+      const sizeNum = parseFloat(sizeStr);
+      const unit = sizeStr.split(' ')[1];
+      
+      let blockCount = 0;
+      let blockType = 'size-empty';
+      
+      if (unit === 'bytes') {
+        blockCount = 1;
+        blockType = 'size-small';
+      } else if (unit === 'KB') {
+        blockCount = Math.min(Math.ceil(sizeNum / 10), 20);
+        blockType = 'size-small';
+      } else if (unit === 'MB') {
+        blockCount = Math.min(Math.ceil(sizeNum / 10), 40);
+        blockType = sizeNum > 100 ? 'size-medium' : 'size-small';
+      } else if (unit === 'GB') {
+        blockCount = Math.min(Math.ceil(sizeNum * 10), 60);
+        blockType = 'size-large';
+      }
+      
+      // Create blocks
+      for (let i = 0; i < 100; i++) {
+        const block = `<div class="size-block ${i < blockCount ? blockType : 'size-empty'}"></div>`;
+        blocks.push(block);
+      }
+      
+      sizeBlocks.innerHTML = blocks.join('');
+    }
+
+    // Initialize with root directory
+    document.addEventListener('DOMContentLoaded', () => {
+      updateFileDetails('/', fileData['/']);
+    });
+  </script>
+</body>
+</html>

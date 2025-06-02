@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Block Visualization Components</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    /* Defragger-style Block Grid */
+    .block-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
+      gap: 2px;
+      padding: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      max-width: 100%;
+      min-height: 12rem;
+    }
+    
+    .block-item {
+      aspect-ratio: 1;
+      border: 1px solid var(--fine-use-border);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .block-item:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+    
+    /* Block status colors */
+    .block-online { background-color: var(--fine-use-success); }
+    .block-warning { background-color: var(--fine-use-warning); }
+    .block-error { background-color: var(--fine-use-error); }
+    .block-offline { background-color: var(--fine-use-comment); }
+    .block-maintenance { background-color: var(--fine-use-info); }
+    .block-unknown { background-color: var(--fine-use-border); }
+    
+    /* Large Event Blocks */
+    .event-blocks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+    }
+    
+    .event-block {
+      aspect-ratio: 1;
+      border: var(--border-thick) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      position: relative;
+    }
+    
+    .event-block:hover {
+      border-color: var(--fine-use-accent);
+      transform: translateY(-4px);
+    }
+    
+    .event-block.event-critical {
+      border-color: var(--fine-use-error);
+      background-color: rgba(255, 85, 85, 0.1);
+    }
+    
+    .event-block.event-success {
+      border-color: var(--fine-use-success);
+      background-color: rgba(80, 250, 123, 0.1);
+    }
+    
+    .event-block.event-warning {
+      border-color: var(--fine-use-warning);
+      background-color: rgba(241, 250, 140, 0.1);
+    }
+    
+    .event-block.event-info {
+      border-color: var(--fine-use-info);
+      background-color: rgba(139, 233, 253, 0.1);
+    }
+    
+    .event-icon {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .event-critical .event-icon { color: var(--fine-use-error); }
+    .event-success .event-icon { color: var(--fine-use-success); }
+    .event-warning .event-icon { color: var(--fine-use-warning); }
+    .event-info .event-icon { color: var(--fine-use-info); }
+    
+    .event-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .event-count {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-comment);
+    }
+    
+    /* Chapter/Timeline Blocks */
+    .timeline-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+    }
+    
+    .timeline-chapter {
+      display: grid;
+      grid-template-columns: 12rem 1fr;
+      gap: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      padding: var(--space-lg);
+    }
+    
+    .chapter-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      border-right: var(--border-thick) solid var(--fine-use-border);
+      padding-right: var(--space-lg);
+    }
+    
+    .chapter-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .chapter-time {
+      font-size: var(--text-lg);
+      color: var(--fine-use-comment);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .chapter-status {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-sm);
+      text-transform: uppercase;
+    }
+    
+    .chapter-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+      gap: 4px;
+      align-content: start;
+    }
+    
+    .chapter-block {
+      aspect-ratio: 1;
+      border: 1px solid var(--fine-use-border);
+      cursor: pointer;
+      transition: transform var(--transition-fast);
+    }
+    
+    .chapter-block:hover {
+      transform: scale(1.2);
+    }
+    
+    /* Status Legend */
+    .status-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .legend-block {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1px solid var(--fine-use-border);
+    }
+    
+    .legend-label {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    /* Real-time Updates */
+    @keyframes blockPulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+    
+    .block-updating {
+      animation: blockPulse 1s infinite;
+    }
+    
+    /* Interactive Block Details */
+    .block-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--fine-use-bg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      padding: var(--space-sm);
+      font-size: var(--text-xs);
+      color: var(--fine-use-text);
+      white-space: nowrap;
+      z-index: var(--z-tooltip);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-fast);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .block-item:hover .block-tooltip,
+    .chapter-block:hover .block-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">BLOCK VISUALIZATION SYSTEM</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">COMPONENT TYPE:</span>
+        <span class="text-accent">DATA BLOCKS</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">REAL-TIME</span>
+      </div>
+    </header>
+
+    <!-- Status Legend -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">STATUS LEGEND</h2>
+      
+      <div class="status-legend">
+        <div class="legend-item">
+          <div class="legend-block block-online"></div>
+          <span class="legend-label">ONLINE</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-block block-warning"></div>
+          <span class="legend-label">WARNING</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-block block-error"></div>
+          <span class="legend-label">ERROR</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-block block-maintenance"></div>
+          <span class="legend-label">MAINTENANCE</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-block block-offline"></div>
+          <span class="legend-label">OFFLINE</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-block block-unknown"></div>
+          <span class="legend-label">UNKNOWN</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Defragger-style Grid -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">SYSTEM STATUS GRID (DEFRAGGER STYLE)</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">SERVER CLUSTER STATUS - 500 NODES</h3>
+        <div class="block-grid" id="status-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Large Event Blocks -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">MAJOR EVENT MONITORING</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">CRITICAL SYSTEM EVENTS</h3>
+        <div class="event-blocks">
+          <div class="event-block event-critical" onclick="showEventDetails('critical')">
+            <div class="event-icon">⚠</div>
+            <div class="event-title">CRITICAL</div>
+            <div class="event-count" id="critical-count">3</div>
+          </div>
+          
+          <div class="event-block event-warning" onclick="showEventDetails('warning')">
+            <div class="event-icon">⚡</div>
+            <div class="event-title">WARNINGS</div>
+            <div class="event-count" id="warning-count">12</div>
+          </div>
+          
+          <div class="event-block event-success" onclick="showEventDetails('success')">
+            <div class="event-icon">✓</div>
+            <div class="event-title">RESOLVED</div>
+            <div class="event-count" id="success-count">247</div>
+          </div>
+          
+          <div class="event-block event-info" onclick="showEventDetails('info')">
+            <div class="event-icon">ℹ</div>
+            <div class="event-title">INFO</div>
+            <div class="event-count" id="info-count">89</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Chapters -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">TIMELINE CHAPTER BLOCKS</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">DEPLOYMENT TIMELINE - LAST 24 HOURS</h3>
+        <div class="timeline-blocks" id="timeline-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Controls -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">BLOCK SYSTEM CONTROLS</h2>
+      
+      <div class="fine-use-component">
+        <div class="button-grid button-grid-2x2">
+          <button class="fine-use-button grid-button" data-variant="primary" onclick="regenerateBlocks()">
+            REGENERATE GRID
+          </button>
+          <button class="fine-use-button grid-button" onclick="simulateEvents()">
+            SIMULATE EVENTS
+          </button>
+          <button class="fine-use-button grid-button" onclick="toggleUpdates()">
+            <span id="update-toggle">PAUSE UPDATES</span>
+          </button>
+          <button class="fine-use-button grid-button" data-variant="info" onclick="exportBlockData()">
+            EXPORT BLOCK DATA
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Block system state
+    const BlockSystem = {
+      gridSize: 500,
+      isUpdating: true,
+      updateInterval: null,
+      statusTypes: ['online', 'warning', 'error', 'offline', 'maintenance', 'unknown'],
+      statusWeights: [60, 15, 8, 5, 7, 5], // Probability weights
+      
+      events: {
+        critical: 3,
+        warning: 12,
+        success: 247,
+        info: 89
+      },
+      
+      chapters: [
+        { title: 'DEPLOYMENT START', time: '00:00', duration: 2, status: 'success' },
+        { title: 'DATABASE MIGRATION', time: '02:15', duration: 6, status: 'warning' },
+        { title: 'SERVICE RESTART', time: '08:30', duration: 3, status: 'success' },
+        { title: 'CACHE REBUILD', time: '11:45', duration: 4, status: 'info' },
+        { title: 'LOAD BALANCER UPDATE', time: '15:20', duration: 2, status: 'error' },
+        { title: 'FINAL VERIFICATION', time: '17:35', duration: 1, status: 'success' }
+      ]
+    };
+
+    // Generate random status based on weights
+    function getRandomStatus() {
+      const rand = Math.random() * 100;
+      let cumulative = 0;
+      
+      for (let i = 0; i < BlockSystem.statusWeights.length; i++) {
+        cumulative += BlockSystem.statusWeights[i];
+        if (rand <= cumulative) {
+          return BlockSystem.statusTypes[i];
+        }
+      }
+      return BlockSystem.statusTypes[0];
+    }
+
+    // Generate status grid
+    function generateStatusGrid() {
+      const grid = document.getElementById('status-grid');
+      grid.innerHTML = '';
+      
+      for (let i = 0; i < BlockSystem.gridSize; i++) {
+        const block = document.createElement('div');
+        block.className = `block-item block-${getRandomStatus()}`;
+        block.innerHTML = `<div class="block-tooltip">Node ${i + 1}</div>`;
+        
+        // Add click event
+        block.addEventListener('click', () => {
+          showNodeDetails(i + 1, block.className);
+        });
+        
+        grid.appendChild(block);
+      }
+    }
+
+    // Generate timeline chapters
+    function generateTimeline() {
+      const container = document.getElementById('timeline-container');
+      container.innerHTML = '';
+      
+      BlockSystem.chapters.forEach((chapter, index) => {
+        const chapterEl = document.createElement('div');
+        chapterEl.className = 'timeline-chapter';
+        
+        const blocksPerHour = Math.floor(chapter.duration * 10);
+        let chapterBlocks = '';
+        
+        for (let i = 0; i < blocksPerHour; i++) {
+          const status = Math.random() < 0.8 ? chapter.status : getRandomStatus();
+          chapterBlocks += `<div class="chapter-block block-${status}">
+            <div class="block-tooltip">${chapter.title} - Block ${i + 1}</div>
+          </div>`;
+        }
+        
+        chapterEl.innerHTML = `
+          <div class="chapter-info">
+            <div class="chapter-title">${chapter.title}</div>
+            <div class="chapter-time">${chapter.time}</div>
+            <div class="chapter-status status-${chapter.status}">${chapter.status.toUpperCase()}</div>
+          </div>
+          <div class="chapter-content">
+            ${chapterBlocks}
+          </div>
+        `;
+        
+        container.appendChild(chapterEl);
+      });
+    }
+
+    // Update blocks in real-time
+    function updateBlocks() {
+      if (!BlockSystem.isUpdating) return;
+      
+      const blocks = document.querySelectorAll('.block-item');
+      const numToUpdate = Math.floor(Math.random() * 10) + 1;
+      
+      for (let i = 0; i < numToUpdate; i++) {
+        const randomIndex = Math.floor(Math.random() * blocks.length);
+        const block = blocks[randomIndex];
+        const newStatus = getRandomStatus();
+        
+        // Remove old status classes
+        BlockSystem.statusTypes.forEach(status => {
+          block.classList.remove(`block-${status}`);
+        });
+        
+        // Add new status
+        block.classList.add(`block-${newStatus}`, 'block-updating');
+        
+        // Remove updating class after animation
+        setTimeout(() => {
+          block.classList.remove('block-updating');
+        }, 1000);
+      }
+    }
+
+    // Event handlers
+    function showNodeDetails(nodeId, className) {
+      const status = className.split('block-')[1].split(' ')[0];
+      alert(`Node ${nodeId}\nStatus: ${status.toUpperCase()}\nClick timestamp: ${new Date().toLocaleTimeString()}`);
+    }
+
+    function showEventDetails(type) {
+      alert(`${type.toUpperCase()} Events\nCount: ${BlockSystem.events[type]}\nLast Updated: ${new Date().toLocaleTimeString()}`);
+    }
+
+    function regenerateBlocks() {
+      generateStatusGrid();
+      generateTimeline();
+    }
+
+    function simulateEvents() {
+      // Randomly update event counts
+      Object.keys(BlockSystem.events).forEach(key => {
+        const change = Math.floor(Math.random() * 10) - 5;
+        BlockSystem.events[key] = Math.max(0, BlockSystem.events[key] + change);
+        document.getElementById(`${key}-count`).textContent = BlockSystem.events[key];
+      });
+      
+      // Update some blocks to show activity
+      updateBlocks();
+    }
+
+    function toggleUpdates() {
+      BlockSystem.isUpdating = !BlockSystem.isUpdating;
+      const button = document.getElementById('update-toggle');
+      button.textContent = BlockSystem.isUpdating ? 'PAUSE UPDATES' : 'RESUME UPDATES';
+      
+      if (BlockSystem.isUpdating) {
+        startUpdates();
+      } else {
+        clearInterval(BlockSystem.updateInterval);
+      }
+    }
+
+    function exportBlockData() {
+      const data = {
+        timestamp: new Date().toISOString(),
+        gridSize: BlockSystem.gridSize,
+        events: BlockSystem.events,
+        chapters: BlockSystem.chapters,
+        theme: document.documentElement.getAttribute('data-theme')
+      };
+      
+      const dataStr = JSON.stringify(data, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `fine-use-blocks-${Date.now()}.json`;
+      link.click();
+    }
+
+    function startUpdates() {
+      BlockSystem.updateInterval = setInterval(() => {
+        updateBlocks();
+        if (Math.random() < 0.3) simulateEvents();
+      }, 3000);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      generateStatusGrid();
+      generateTimeline();
+      startUpdates();
+    });
+  </script>
+</body>
+</html>

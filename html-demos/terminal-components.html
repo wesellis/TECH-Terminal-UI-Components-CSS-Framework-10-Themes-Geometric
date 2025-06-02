@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Terminal Components (Fira Code Fixed)</title>
+  
+  <style>
+    /* FIRA CODE FONT LOADING - HIGHEST PRIORITY */
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+    
+    /* FORCE FIRA CODE ON EVERYTHING */
+    * {
+      font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace !important;
+      font-variant-ligatures: common-ligatures !important;
+      font-feature-settings: "liga" 1, "calt" 1 !important;
+    }
+
+    /* CUSTOM PROPERTIES FOR GITHUB DARK THEME */
+    :root {
+      --fine-use-bg: #0d1117;
+      --fine-use-surface: #161b22;
+      --fine-use-border: #30363d;
+      --fine-use-text: #f0f6fc;
+      --fine-use-comment: #7d8590;
+      --fine-use-success: #238636;
+      --fine-use-warning: #d29922;
+      --fine-use-error: #da3633;
+      --fine-use-info: #1f6feb;
+      --fine-use-accent: #58a6ff;
+      --fine-use-orange: #fd7d00;
+      
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+      
+      /* Text sizes */
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-md: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      
+      /* Borders */
+      --border-thin: 2px;
+      --border-thick: 4px;
+    }
+
+    /* BASE STYLES */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--fine-use-bg);
+      color: var(--fine-use-text);
+      font-family: 'Fira Code', monospace !important;
+      font-size: var(--text-md);
+      line-height: 1.5;
+    }
+
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+
+    /* HEADERS */
+    .fine-use-h1 {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      margin: 0 0 var(--space-lg) 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .fine-use-h2 {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      margin: 0 0 var(--space-lg) 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .fine-use-h3 {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+    }
+
+    /* LAYOUT */
+    .grid-halves {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: stretch;
+    }
+
+    .grid-component {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .gap-8 {
+      gap: 2rem;
+    }
+
+    .text-lg {
+      font-size: var(--text-lg);
+    }
+
+    .text-comment {
+      color: var(--fine-use-comment);
+    }
+
+    .text-accent {
+      color: var(--fine-use-accent);
+    }
+
+    .text-info {
+      color: var(--fine-use-info);
+    }
+
+    .text-success {
+      color: var(--fine-use-success);
+    }
+
+    /* THEME SELECTOR */
+    .theme-selector {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .theme-label {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+
+    .theme-dropdown {
+      padding: var(--space-sm) var(--space-md);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: 'Fira Code', monospace !important;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 200px;
+    }
+
+    /* TERMINAL */
+    .fine-use-terminal {
+      border: var(--border-thick) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      padding: 0;
+      height: 24rem;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background-color: var(--fine-use-border);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .terminal-title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .terminal-controls {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .terminal-control {
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid var(--fine-use-border);
+    }
+
+    .terminal-close { background-color: var(--fine-use-error); }
+    .terminal-minimize { background-color: var(--fine-use-warning); }
+    .terminal-maximize { background-color: var(--fine-use-success); }
+
+    .terminal-content {
+      padding: var(--space-lg);
+      height: calc(100% - 4rem);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .terminal-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .terminal-line {
+      margin-bottom: var(--space-sm);
+      font-size: var(--text-lg);
+      line-height: 1.4;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .terminal-prompt {
+      color: var(--fine-use-success);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .terminal-command {
+      color: var(--fine-use-text);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .terminal-output {
+      color: var(--fine-use-comment);
+      margin-left: var(--space-xl);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .terminal-cursor {
+      display: inline-block;
+      width: 0.75rem;
+      height: 1.25rem;
+      background-color: var(--fine-use-accent);
+      animation: cursor-blink 1s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes cursor-blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* CODE EDITOR */
+    .fine-use-code-editor {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      height: 20rem;
+      display: flex;
+      flex: 1;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .code-line-numbers {
+      background-color: var(--fine-use-border);
+      padding: var(--space-lg) var(--space-md);
+      border-right: var(--border-thin) solid var(--fine-use-border);
+      font-size: var(--text-md);
+      color: var(--fine-use-comment);
+      text-align: right;
+      user-select: none;
+      width: 4rem;
+      min-width: 4rem;
+      max-width: 4rem;
+      overflow: hidden;
+      flex-shrink: 0;
+      font-family: 'Fira Code', monospace !important;
+      line-height: 1.5;
+    }
+
+    .code-content {
+      flex: 1;
+      padding: var(--space-lg);
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .code-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .code-line {
+      font-size: var(--text-md);
+      line-height: 1.5;
+      margin-bottom: 0;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    /* SYNTAX HIGHLIGHTING */
+    .code-keyword { 
+      color: var(--fine-use-accent); 
+      font-weight: 700; 
+      font-family: 'Fira Code', monospace !important;
+    }
+    .code-string { 
+      color: var(--fine-use-success); 
+      font-family: 'Fira Code', monospace !important;
+    }
+    .code-comment { 
+      color: var(--fine-use-comment); 
+      font-style: italic; 
+      font-family: 'Fira Code', monospace !important;
+    }
+    .code-number { 
+      color: var(--fine-use-warning); 
+      font-family: 'Fira Code', monospace !important;
+    }
+    .code-function { 
+      color: var(--fine-use-info); 
+      font-family: 'Fira Code', monospace !important;
+    }
+    .code-variable { 
+      color: var(--fine-use-text); 
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    /* HEX VIEWER */
+    .hex-viewer {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      padding: var(--space-lg);
+      font-size: var(--text-sm);
+      overflow: auto;
+      height: 20rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      flex: 1;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .hex-viewer::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hex-row {
+      display: flex;
+      margin-bottom: 0.25rem;
+      font-family: 'Fira Code', monospace !important;
+      line-height: 1.4;
+    }
+
+    .hex-address {
+      color: var(--fine-use-comment);
+      width: 8rem;
+      margin-right: var(--space-lg);
+      flex-shrink: 0;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .hex-bytes {
+      color: var(--fine-use-text);
+      width: 24rem;
+      margin-right: var(--space-lg);
+      flex-shrink: 0;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .hex-ascii {
+      color: var(--fine-use-accent);
+      flex: 1;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .hex-highlight {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+    }
+
+    /* SYSTEM RESOURCES */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .resource-item {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      padding: var(--space-lg);
+      text-align: center;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .resource-value {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      color: var(--fine-use-accent);
+      margin-bottom: var(--space-sm);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .resource-label {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .resource-bar {
+      height: 0.5rem;
+      background-color: var(--fine-use-border);
+      border: 1px solid var(--fine-use-border);
+      overflow: hidden;
+    }
+
+    .resource-fill {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* PROCESS MONITOR */
+    .process-monitor {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      height: 16rem;
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .process-monitor::-webkit-scrollbar {
+      display: none;
+    }
+
+    .process-header {
+      background-color: var(--fine-use-border);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+      display: grid;
+      grid-template-columns: 6rem 3rem 6rem 6rem 6rem 1fr;
+      gap: var(--space-md);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .process-row {
+      display: grid;
+      grid-template-columns: 6rem 3rem 6rem 6rem 6rem 1fr;
+      gap: var(--space-md);
+      padding: var(--space-sm) var(--space-lg);
+      border-bottom: 1px solid var(--fine-use-border);
+      font-size: var(--text-sm);
+      color: var(--fine-use-comment);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .process-row:hover {
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+    }
+
+    .process-high { color: var(--fine-use-error); }
+    .process-medium { color: var(--fine-use-warning); }
+    .process-low { color: var(--fine-use-success); }
+
+    /* NETWORK MONITOR */
+    .network-monitor {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      padding: var(--space-lg);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .network-row {
+      display: grid;
+      grid-template-columns: 2rem 8rem 8rem 6rem 6rem 8rem 1fr;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--fine-use-border);
+      font-size: var(--text-sm);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .network-header {
+      font-weight: 700;
+      color: var(--fine-use-text);
+      background-color: var(--fine-use-border);
+      padding: var(--space-md) 0;
+      text-transform: uppercase;
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .network-data {
+      color: var(--fine-use-comment);
+      font-family: 'Fira Code', monospace !important;
+    }
+
+    .network-status-active { color: var(--fine-use-success); }
+    .network-status-warning { color: var(--fine-use-warning); }
+    .network-status-error { color: var(--fine-use-error); }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">ADVANCED TERMINAL COMPONENTS</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">COMPONENT TYPE:</span>
+        <span class="text-accent">TERMINAL INTERFACES</span>
+        <span class="text-comment">THEMES:</span>
+        <span class="text-info">10</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">FIRA CODE FIXED</span>
+      </div>
+    </header>
+
+    <!-- Terminal Emulator -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">TERMINAL EMULATOR</h2>
+      
+      <div class="fine-use-terminal">
+        <div class="terminal-header">
+          <span class="terminal-title">SYSTEM TERMINAL - /usr/local/bin</span>
+          <div class="terminal-controls">
+            <div class="terminal-control terminal-close"></div>
+            <div class="terminal-control terminal-minimize"></div>
+            <div class="terminal-control terminal-maximize"></div>
+          </div>
+        </div>
+        <div class="terminal-content" id="terminal-content">
+          <div class="terminal-line">
+            <span class="terminal-prompt">root@system:~$</span>
+            <span class="terminal-command"> ps aux | grep httpd</span>
+          </div>
+          <div class="terminal-line terminal-output">
+            apache   1234  0.5  2.1  123456  8192  ?  S  12:34  0:01  /usr/sbin/httpd
+          </div>
+          <div class="terminal-line terminal-output">
+            apache   1235  0.3  1.8  98765   6144  ?  S  12:34  0:00  /usr/sbin/httpd
+          </div>
+          <div class="terminal-line">
+            <span class="terminal-prompt">root@system:~$</span>
+            <span class="terminal-command"> netstat -tlnp</span>
+          </div>
+          <div class="terminal-line terminal-output">
+            tcp  0  0  0.0.0.0:80    0.0.0.0:*  LISTEN  1234/httpd
+          </div>
+          <div class="terminal-line terminal-output">
+            tcp  0  0  0.0.0.0:443   0.0.0.0:*  LISTEN  1234/httpd
+          </div>
+          <div class="terminal-line terminal-output">
+            tcp  0  0  0.0.0.0:22    0.0.0.0:*  LISTEN  5678/sshd
+          </div>
+          <div class="terminal-line">
+            <span class="terminal-prompt">root@system:~$</span>
+            <span class="terminal-command"> tail -f /var/log/access.log</span>
+          </div>
+          <div class="terminal-line">
+            <span class="terminal-prompt">root@system:~$</span>
+            <span class="terminal-command" id="typing-command"></span>
+            <span class="terminal-cursor"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Editor and Hex Viewer -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">CODE EDITOR & HEX VIEWER</h2>
+      
+      <div class="grid-halves">
+        <div class="grid-component">
+          <h3 class="fine-use-h3">SYNTAX HIGHLIGHTED EDITOR</h3>
+          <div class="fine-use-code-editor">
+            <div class="code-line-numbers">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+            </div>
+            <div class="code-content">
+              <pre class="code-line"><span class="code-keyword">function</span> <span class="code-function">processData</span>(<span class="code-variable">input</span>) {</pre>
+              <pre class="code-line">  <span class="code-comment">// Initialize processing variables</span></pre>
+              <pre class="code-line">  <span class="code-keyword">const</span> <span class="code-variable">buffer</span> = <span class="code-keyword">new</span> <span class="code-function">ArrayBuffer</span>(<span class="code-number">1024</span>);</pre>
+              <pre class="code-line">  <span class="code-keyword">let</span> <span class="code-variable">offset</span> = <span class="code-number">0</span>;</pre>
+              <pre class="code-line">  </pre>
+              <pre class="code-line">  <span class="code-comment">// Process each chunk of data</span></pre>
+              <pre class="code-line">  <span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-variable">i</span> = <span class="code-number">0</span>; <span class="code-variable">i</span> < <span class="code-variable">input</span>.<span class="code-variable">length</span>; <span class="code-variable">i</span>++) {</pre>
+              <pre class="code-line">    <span class="code-keyword">if</span> (<span class="code-function">isValidByte</span>(<span class="code-variable">input</span>[<span class="code-variable">i</span>])) {</pre>
+              <pre class="code-line">      <span class="code-variable">buffer</span>[<span class="code-variable">offset</span>++] = <span class="code-variable">input</span>[<span class="code-variable">i</span>];</pre>
+              <pre class="code-line">    } <span class="code-keyword">else</span> {</pre>
+              <pre class="code-line">      <span class="code-function">console</span>.<span class="code-function">error</span>(<span class="code-string">"Invalid byte detected"</span>);</pre>
+              <pre class="code-line">      <span class="code-keyword">return</span> <span class="code-keyword">null</span>;</pre>
+              <pre class="code-line">    }</pre>
+              <pre class="code-line">  }</pre>
+              <pre class="code-line">  <span class="code-keyword">return</span> <span class="code-variable">buffer</span>;</pre>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-component">
+          <h3 class="fine-use-h3">HEXADECIMAL VIEWER</h3>
+          <div class="hex-viewer" id="hex-viewer">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- System Monitoring -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">SYSTEM MONITORING INTERFACES</h2>
+      
+      <!-- Resource Usage -->
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">SYSTEM RESOURCES</h3>
+        <div class="resource-grid">
+          <div class="resource-item">
+            <div class="resource-value" id="cpu-usage">67</div>
+            <div class="resource-label">CPU %</div>
+            <div class="resource-bar">
+              <div class="resource-fill" id="cpu-bar" style="width: 67%; background-color: var(--fine-use-warning);"></div>
+            </div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-value" id="memory-usage">45</div>
+            <div class="resource-label">MEMORY %</div>
+            <div class="resource-bar">
+              <div class="resource-fill" id="memory-bar" style="width: 45%; background-color: var(--fine-use-success);"></div>
+            </div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-value" id="disk-usage">89</div>
+            <div class="resource-label">DISK %</div>
+            <div class="resource-bar">
+              <div class="resource-fill" id="disk-bar" style="width: 89%; background-color: var(--fine-use-error);"></div>
+            </div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-value" id="network-usage">23</div>
+            <div class="resource-label">NETWORK %</div>
+            <div class="resource-bar">
+              <div class="resource-fill" id="network-bar" style="width: 23%; background-color: var(--fine-use-info);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Process Monitor -->
+      <div style="margin-top: var(--space-xl);">
+        <h3 class="fine-use-h3">PROCESS MONITOR</h3>
+        <div class="process-monitor">
+          <div class="process-header">
+            <div>PID</div>
+            <div>CPU</div>
+            <div>MEMORY</div>
+            <div>TIME</div>
+            <div>STATE</div>
+            <div>COMMAND</div>
+          </div>
+          <div id="process-list">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Network Monitor -->
+      <div style="margin-top: var(--space-xl);">
+        <h3 class="fine-use-h3">NETWORK CONNECTIONS</h3>
+        <div class="network-monitor">
+          <div class="network-row network-header">
+            <div>#</div>
+            <div>PROTOCOL</div>
+            <div>LOCAL ADDR</div>
+            <div>PORT</div>
+            <div>STATE</div>
+            <div>REMOTE</div>
+            <div>PROCESS</div>
+          </div>
+          <div id="network-list">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Terminal typing animation
+    const commands = [
+      'systemctl status httpd',
+      'tail -f /var/log/messages', 
+      'ps aux | grep mysql',
+      'netstat -an | grep :80',
+      'df -h',
+      'top -p 1234',
+      'ss -tulpn'
+    ];
+    
+    let commandIndex = 0;
+    let charIndex = 0;
+    
+    function typeCommand() {
+      const typingElement = document.getElementById('typing-command');
+      const currentCommand = commands[commandIndex];
+      
+      if (charIndex < currentCommand.length) {
+        typingElement.textContent = currentCommand.substring(0, charIndex + 1);
+        charIndex++;
+        setTimeout(typeCommand, 100);
+      } else {
+        setTimeout(() => {
+          charIndex = 0;
+          commandIndex = (commandIndex + 1) % commands.length;
+          typeCommand();
+        }, 2000);
+      }
+    }
+
+    // Generate hex viewer content
+    function generateHexViewer() {
+      const hexViewer = document.getElementById('hex-viewer');
+      const lines = [];
+      
+      for (let i = 0; i < 32; i++) {
+        const address = (i * 16).toString(16).padStart(8, '0').toUpperCase();
+        const bytes = [];
+        const ascii = [];
+        
+        for (let j = 0; j < 16; j++) {
+          const byte = Math.floor(Math.random() * 256);
+          bytes.push(byte.toString(16).padStart(2, '0').toUpperCase());
+          ascii.push(byte >= 32 && byte <= 126 ? String.fromCharCode(byte) : '.');
+        }
+        
+        lines.push(`
+          <div class="hex-row">
+            <span class="hex-address">${address}</span>
+            <span class="hex-bytes">${bytes.join(' ')}</span>
+            <span class="hex-ascii">${ascii.join('')}</span>
+          </div>
+        `);
+      }
+      
+      hexViewer.innerHTML = lines.join('');
+    }
+
+    // Generate process list
+    function generateProcessList() {
+      const processList = document.getElementById('process-list');
+      const processes = [
+        { pid: 1234, cpu: 15.3, memory: 2048, time: '01:23', state: 'R', command: '/usr/sbin/httpd -DFOREGROUND' },
+        { pid: 5678, cpu: 8.7, memory: 1024, time: '12:45', state: 'S', command: '/usr/bin/mysql --defaults-file=/etc/mysql/my.cnf' },
+        { pid: 9012, cpu: 23.1, memory: 4096, time: '00:56', state: 'R', command: 'node /opt/app/server.js' },
+        { pid: 3456, cpu: 1.2, memory: 512, time: '03:12', state: 'S', command: '/usr/sbin/sshd -D' },
+        { pid: 7890, cpu: 45.6, memory: 8192, time: '00:34', state: 'R', command: 'python3 /opt/ml/train.py --gpu' },
+        { pid: 2345, cpu: 3.4, memory: 256, time: '15:23', state: 'S', command: '/usr/bin/cron -f' },
+        { pid: 6789, cpu: 67.8, memory: 16384, time: '00:12', state: 'R', command: 'java -Xmx16g -jar elasticsearch.jar' },
+        { pid: 1357, cpu: 2.1, memory: 128, time: '24:56', state: 'S', command: '/usr/sbin/rsyslog' }
+      ];
+      
+      const rows = processes.map(proc => {
+        const cpuClass = proc.cpu > 50 ? 'process-high' : proc.cpu > 20 ? 'process-medium' : 'process-low';
+        return `
+          <div class="process-row">
+            <div>${proc.pid}</div>
+            <div class="${cpuClass}">${proc.cpu}%</div>
+            <div>${proc.memory}K</div>
+            <div>${proc.time}</div>
+            <div>${proc.state}</div>
+            <div>${proc.command}</div>
+          </div>
+        `;
+      });
+      
+      processList.innerHTML = rows.join('');
+    }
+
+    // Generate network connections
+    function generateNetworkList() {
+      const networkList = document.getElementById('network-list');
+      const connections = [
+        { protocol: 'TCP', local: '0.0.0.0', port: '80', state: 'LISTEN', remote: '*.*', process: 'httpd/1234' },
+        { protocol: 'TCP', local: '0.0.0.0', port: '443', state: 'LISTEN', remote: '*.*', process: 'httpd/1234' },
+        { protocol: 'TCP', local: '0.0.0.0', port: '22', state: 'LISTEN', remote: '*.*', process: 'sshd/5678' },
+        { protocol: 'TCP', local: '192.168.1.100', port: '3306', state: 'ESTABLISHED', remote: '192.168.1.50', process: 'mysql/9012' },
+        { protocol: 'UDP', local: '0.0.0.0', port: '53', state: 'ACTIVE', remote: '*.*', process: 'bind/3456' },
+        { protocol: 'TCP', local: '10.0.0.1', port: '8080', state: 'TIME_WAIT', remote: '10.0.0.15', process: 'node/7890' },
+        { protocol: 'TCP', local: '127.0.0.1', port: '9200', state: 'LISTEN', remote: '*.*', process: 'elasticsearch/2345' }
+      ];
+      
+      const rows = connections.map((conn, index) => {
+        const statusClass = conn.state === 'LISTEN' ? 'network-status-active' : 
+                           conn.state === 'TIME_WAIT' ? 'network-status-warning' : 
+                           conn.state === 'ESTABLISHED' ? 'network-status-active' : 'network-data';
+        return `
+          <div class="network-row">
+            <div class="network-data">${index + 1}</div>
+            <div class="network-data">${conn.protocol}</div>
+            <div class="network-data">${conn.local}</div>
+            <div class="network-data">${conn.port}</div>
+            <div class="${statusClass}">${conn.state}</div>
+            <div class="network-data">${conn.remote}</div>
+            <div class="network-data">${conn.process}</div>
+          </div>
+        `;
+      });
+      
+      networkList.innerHTML = rows.join('');
+    }
+
+    // Update system resources
+    function updateResources() {
+      const resources = ['cpu', 'memory', 'disk', 'network'];
+      
+      resources.forEach(resource => {
+        const newValue = Math.floor(Math.random() * 100);
+        const valueElement = document.getElementById(`${resource}-usage`);
+        const barElement = document.getElementById(`${resource}-bar`);
+        
+        valueElement.textContent = newValue;
+        barElement.style.width = `${newValue}%`;
+        
+        // Update color based on value
+        if (newValue > 80) {
+          barElement.style.backgroundColor = 'var(--fine-use-error)';
+        } else if (newValue > 60) {
+          barElement.style.backgroundColor = 'var(--fine-use-warning)';
+        } else {
+          barElement.style.backgroundColor = 'var(--fine-use-success)';
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      generateHexViewer();
+      generateProcessList();
+      generateNetworkList();
+      typeCommand();
+      
+      // Update resources every 3 seconds
+      setInterval(updateResources, 3000);
+    });
+  </script>
+</body>
+</html>

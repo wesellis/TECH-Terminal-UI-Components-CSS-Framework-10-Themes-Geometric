@@ -1,0 +1,140 @@
+{
+  "name": "fine-use-design-system",
+  "version": "1.2.0",
+  "description": "A terminal-inspired interface design system prioritizing functional density, real-time data visualization, and uncompromising geometric precision",
+  "main": "components/css/fine-use-core.css",
+  "module": "components/react/index.js",
+  "types": "components/types/index.d.ts",
+  "files": [
+    "components/",
+    "themes/",
+    "documentation/",
+    "html-demos/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "npm run serve",
+    "serve": "python -m http.server 8080 || python3 -m http.server 8080",
+    "build": "npm run build-css && npm run build-js && npm run build-docs",
+    "build-css": "postcss components/css/fine-use-core.css -o dist/fine-use.min.css --use autoprefixer cssnano",
+    "build-js": "rollup -c rollup.config.js",
+    "build-docs": "node scripts/build-docs.js",
+    "test": "npm run test-accessibility && npm run test-browser && npm run test-contrast",
+    "test-accessibility": "axe-cli html-demos/",
+    "test-browser": "playwright test",
+    "test-contrast": "node scripts/test-contrast.js",
+    "lint": "eslint components/vanilla-js/ && stylelint components/css/",
+    "format": "prettier --write .",
+    "validate": "npm run lint && npm run test",
+    "release": "npm run validate && npm run build && npm publish",
+    "theme:create": "node tools/theme-generator/create-theme.js",
+    "theme:validate": "node tools/theme-generator/validate-theme.js",
+    "docs:serve": "http-server documentation/ -p 3000",
+    "demo:serve": "http-server html-demos/ -p 8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wesellis/fine-use-design-system.git"
+  },
+  "keywords": [
+    "design-system",
+    "terminal",
+    "ui",
+    "css",
+    "components",
+    "dashboard",
+    "monitoring",
+    "real-time",
+    "data-visualization",
+    "geometric",
+    "accessibility",
+    "themes",
+    "inter-font",
+    "trading-terminal",
+    "system-monitoring"
+  ],
+  "author": "Wesley Ellis <wes@wesellis.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wesellis/fine-use-design-system/issues"
+  },
+  "homepage": "https://fine-use.dev",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "Chrome >= 90",
+    "Firefox >= 88",
+    "Safari >= 14",
+    "Edge >= 90"
+  ],
+  "devDependencies": {
+    "@axe-core/cli": "^4.8.0",
+    "@playwright/test": "^1.40.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^6.0.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "http-server": "^14.1.0",
+    "postcss": "^8.4.0",
+    "postcss-cli": "^11.0.0",
+    "prettier": "^3.0.0",
+    "rollup": "^4.0.0",
+    "stylelint": "^15.0.0",
+    "stylelint-config-standard": "^34.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./components/react/index.js",
+      "require": "./components/react/index.cjs",
+      "types": "./components/types/index.d.ts"
+    },
+    "./css": "./components/css/fine-use-core.css",
+    "./themes/*": "./themes/*.css",
+    "./vanilla": "./components/vanilla-js/index.js"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/wesellis"
+  },
+  "config": {
+    "themes": [
+      "dracula",
+      "monokai", 
+      "nord",
+      "solarized-dark",
+      "gruvbox",
+      "one-dark",
+      "tokyo-night",
+      "github-dark",
+      "sakura",
+      "bamboo",
+      "arctic-light",
+      "matrix",
+      "amber",
+      "synthwave",
+      "industrial",
+      "blood"
+    ],
+    "supportedBrowsers": [
+      "chrome >= 90",
+      "firefox >= 88", 
+      "safari >= 14",
+      "edge >= 90"
+    ]
+  }
+}

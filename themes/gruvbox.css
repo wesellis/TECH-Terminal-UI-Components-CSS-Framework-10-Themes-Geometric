@@ -1,0 +1,83 @@
+/*
+ * Fine Use Design System v2.0 - Gruvbox Theme
+ * 
+ * Warm earth tones theme
+ * Comfortable viewing with retro vibes
+ */
+
+:root[data-theme="gruvbox"],
+[data-theme="gruvbox"] {
+  /* Background hierarchy */
+  --fine-use-bg: #282828;
+  --fine-use-surface: #3c3836;
+  
+  /* Structure */
+  --fine-use-border: #504945;
+  
+  /* Text colors */
+  --fine-use-text: #ebdbb2;
+  --fine-use-comment: #928374;
+  
+  /* Status colors - semantic meanings preserved */
+  --fine-use-success: #b8bb26;
+  --fine-use-warning: #fabd2f;
+  --fine-use-error: #fb4934;
+  --fine-use-info: #83a598;
+  
+  /* Theme personality - gruvbox accents */
+  --fine-use-accent: #d3869b;
+  --fine-use-orange: #fe8019;
+}
+
+/* Gruvbox styling */
+[data-theme="gruvbox"] .fine-use-app {
+  background-color: var(--fine-use-bg);
+  color: var(--fine-use-text);
+}
+
+[data-theme="gruvbox"] .current-value {
+  color: var(--fine-use-accent);
+}
+
+[data-theme="gruvbox"] .theme-dropdown option {
+  background-color: var(--fine-use-surface);
+  color: var(--fine-use-text);
+}
+
+/* Gruvbox-specific animations */
+[data-theme="gruvbox"] .log-entry.new {
+  animation: gruvbox-highlight 1s ease-out;
+}
+
+@keyframes gruvbox-highlight {
+  0% { 
+    background-color: var(--fine-use-orange);
+    color: var(--fine-use-bg);
+  }
+  100% { 
+    background-color: var(--fine-use-surface);
+    color: var(--fine-use-text);
+  }
+}
+
+/* Enhanced focus for Gruvbox */
+[data-theme="gruvbox"] .fine-use-focusable:focus {
+  outline: 3px solid var(--fine-use-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(211, 134, 155, 0.3);
+}
+
+/* Table interactions */
+[data-theme="gruvbox"] .fine-use-data-table tr:hover {
+  background-color: rgba(254, 128, 25, 0.1);
+}
+
+/* Warm gruvbox components */
+[data-theme="gruvbox"] .fine-use-component {
+  border: 2px solid var(--fine-use-border);
+  transition: border-color 200ms ease;
+}
+
+[data-theme="gruvbox"] .fine-use-component:hover {
+  border-color: var(--fine-use-orange);
+}

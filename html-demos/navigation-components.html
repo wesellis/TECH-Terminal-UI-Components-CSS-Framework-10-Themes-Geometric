@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Navigation Components Demo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    /* Grid system - CRITICAL FOR LAYOUT */
+    .grid-thirds {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    
+    .grid-halves {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    
+    /* Navigation Tabs */
+    .fine-use-tabs {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+    }
+    
+    .tab-list {
+      display: flex;
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+    }
+    
+    .tab-button {
+      flex: 1;
+      padding: var(--space-lg) var(--space-xl);
+      border: none;
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-comment);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border-right: var(--border-thin) solid var(--fine-use-border);
+    }
+    
+    .tab-button:last-child {
+      border-right: none;
+    }
+    
+    .tab-button.active {
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+    }
+    
+    .tab-button:hover {
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+    }
+    
+    .tab-panel {
+      padding: var(--space-xl);
+      background-color: var(--fine-use-bg);
+      display: none;
+    }
+    
+    .tab-panel.active {
+      display: block;
+    }
+    
+    /* Breadcrumbs */
+    .fine-use-breadcrumbs {
+      display: flex;
+      align-items: center;
+      padding: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      font-size: var(--text-lg);
+      font-weight: 500;
+    }
+    
+    .breadcrumb-item {
+      color: var(--fine-use-comment);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .breadcrumb-item:hover {
+      color: var(--fine-use-accent);
+    }
+    
+    .breadcrumb-item.current {
+      color: var(--fine-use-text);
+      font-weight: 700;
+    }
+    
+    .breadcrumb-separator {
+      margin: 0 var(--space-md);
+      color: var(--fine-use-border);
+      font-weight: 700;
+    }
+    
+    /* Pagination */
+    .fine-use-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-lg);
+    }
+    
+    .page-button {
+      width: 3rem;
+      height: 3rem;
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .page-button:hover {
+      background-color: var(--fine-use-border);
+    }
+    
+    .page-button.active {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+      border-color: var(--fine-use-accent);
+    }
+    
+    .page-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .page-info {
+      padding: 0 var(--space-lg);
+      color: var(--fine-use-comment);
+      font-size: var(--text-lg);
+      font-weight: 500;
+    }
+    
+    /* Sidebar Menu */
+    .fine-use-sidebar {
+      width: 100%;
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      height: 30rem;
+      overflow-y: auto;
+      
+      /* Hide scrollbars but keep functionality */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    /* Equal height for both columns - FORCED SAME HEIGHT */
+    .sidebar-column,
+    .pagination-column {
+      height: 30rem;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Pagination column takes up all remaining space */
+    .pagination-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+    
+    /* Ensure both components in pagination section are equal height */
+    .pagination-section .fine-use-component {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .fine-use-sidebar::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .sidebar-header {
+      padding: var(--space-lg);
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-border);
+    }
+    
+    .sidebar-title {
+      margin: 0;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    .menu-section {
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+    }
+    
+    .menu-header {
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .menu-item {
+      display: block;
+      padding: var(--space-md) var(--space-lg);
+      color: var(--fine-use-comment);
+      text-decoration: none;
+      font-size: var(--text-lg);
+      font-weight: 500;
+      border-bottom: 1px solid var(--fine-use-border);
+      transition: all var(--transition-fast);
+    }
+    
+    .menu-item:hover {
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+    }
+    
+    .menu-item.active {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+    }
+    
+    .menu-item::before {
+      content: "▶";
+      margin-right: var(--space-sm);
+      font-size: var(--text-xs);
+      color: var(--fine-use-accent);
+    }
+    
+    .menu-item.active::before {
+      color: var(--fine-use-bg);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">NAVIGATION COMPONENTS DEMO</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">COMPONENT TYPE:</span>
+        <span class="text-accent">NAVIGATION</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">INTERACTIVE</span>
+      </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">BREADCRUMB NAVIGATION</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">PATH INDICATORS</h3>
+        
+        <nav class="fine-use-breadcrumbs">
+          <a href="#" class="breadcrumb-item">SYSTEM</a>
+          <span class="breadcrumb-separator">▶</span>
+          <a href="#" class="breadcrumb-item">SERVERS</a>
+          <span class="breadcrumb-separator">▶</span>
+          <a href="#" class="breadcrumb-item">PRODUCTION</a>
+          <span class="breadcrumb-separator">▶</span>
+          <span class="breadcrumb-item current">WEB-SERVER-01</span>
+        </nav>
+        
+        <div style="margin-top: var(--space-lg);">
+          <nav class="fine-use-breadcrumbs">
+            <a href="#" class="breadcrumb-item">DASHBOARD</a>
+            <span class="breadcrumb-separator">▶</span>
+            <a href="#" class="breadcrumb-item">MONITORING</a>
+            <span class="breadcrumb-separator">▶</span>
+            <span class="breadcrumb-item current">METRICS</span>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab Navigation -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">TAB NAVIGATION SYSTEM</h2>
+      
+      <div class="fine-use-tabs">
+        <div class="tab-list">
+          <button class="tab-button active" data-tab="overview">OVERVIEW</button>
+          <button class="tab-button" data-tab="metrics">METRICS</button>
+          <button class="tab-button" data-tab="logs">LOGS</button>
+          <button class="tab-button" data-tab="settings">SETTINGS</button>
+        </div>
+        
+        <div class="tab-panel active" id="overview">
+          <h3 class="fine-use-h3">SYSTEM OVERVIEW</h3>
+          <div class="grid-halves gap-lg">
+            <div class="fine-use-component">
+              <h4 class="fine-use-h4">SERVER STATUS</h4>
+              <div class="text-lg">
+                <div class="flex justify-between items-center mb-3">
+                  <span class="text-comment">UPTIME:</span>
+                  <span class="text-success">99.9%</span>
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                  <span class="text-comment">LOAD:</span>
+                  <span class="text-warning">MODERATE</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-comment">STATUS:</span>
+                  <span class="text-success">OPERATIONAL</span>
+                </div>
+              </div>
+            </div>
+            <div class="fine-use-component">
+              <h4 class="fine-use-h4">QUICK ACTIONS</h4>
+              <div class="button-grid button-grid-1x4">
+                <button class="fine-use-button grid-button" data-variant="primary">RESTART SERVICES</button>
+                <button class="fine-use-button grid-button">VIEW LOGS</button>
+                <button class="fine-use-button grid-button">RUN DIAGNOSTICS</button>
+                <button class="fine-use-button grid-button" data-variant="danger">EMERGENCY STOP</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-panel" id="metrics">
+          <h3 class="fine-use-h3">PERFORMANCE METRICS</h3>
+          <div class="fine-use-component">
+            <div class="text-lg text-comment text-center">
+              Real-time metrics display would appear here<br>
+              CPU, Memory, Network, and Disk usage graphs
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-panel" id="logs">
+          <h3 class="fine-use-h3">SYSTEM LOGS</h3>
+          <div class="fine-use-component">
+            <div class="text-lg text-comment text-center">
+              Log streaming interface would appear here<br>
+              Real-time log entries with filtering capabilities
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-panel" id="settings">
+          <h3 class="fine-use-h3">CONFIGURATION</h3>
+          <div class="fine-use-component">
+            <div class="text-lg text-comment text-center">
+              System configuration panel would appear here<br>
+              Settings, toggles, and configuration options
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORRECTED: Sidebar and Pagination using 33%/67% layout -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">CORRECTED LAYOUT - 33% SIDEBAR / 67% MAIN</h2>
+      
+      <div class="grid-main-sidebar gap-xl">
+        <div class="pagination-column">
+          <h3 class="fine-use-h3">PAGINATION CONTROLS</h3>
+          
+          <div class="pagination-section">
+            <div class="fine-use-component">
+              <h4 class="fine-use-h4">DATA TABLE PAGINATION</h4>
+              
+              <nav class="fine-use-pagination">
+                <button class="page-button" onclick="goToPage(1)">◀◀</button>
+                <button class="page-button" onclick="prevPage()">◀</button>
+                <button class="page-button active" onclick="goToPage(1)">1</button>
+                <button class="page-button" onclick="goToPage(2)">2</button>
+                <button class="page-button" onclick="goToPage(3)">3</button>
+                <button class="page-button" onclick="goToPage(4)">4</button>
+                <button class="page-button" onclick="goToPage(5)">5</button>
+                <button class="page-button" onclick="nextPage()">▶</button>
+                <button class="page-button" onclick="goToPage(25)">▶▶</button>
+              </nav>
+              
+              <div class="page-info text-center">
+                PAGE 1 OF 25 • SHOWING 1-50 OF 1,247 RECORDS
+              </div>
+            </div>
+            
+            <div class="fine-use-component">
+              <h4 class="fine-use-h4">COMPACT PAGINATION</h4>
+              
+              <nav class="fine-use-pagination">
+                <button class="page-button" onclick="prevPage()" style="width: auto; padding: 0 var(--space-lg);">◀ PREV</button>
+                <div class="page-info">5 / 25</div>
+                <button class="page-button" onclick="nextPage()" style="width: auto; padding: 0 var(--space-lg);">NEXT ▶</button>
+              </nav>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar-column">
+          <h3 class="fine-use-h3">SIDEBAR NAVIGATION</h3>
+          <nav class="fine-use-sidebar">
+            <div class="sidebar-header">
+              <h4 class="sidebar-title">SYSTEM CONTROL</h4>
+            </div>
+            
+            <div class="menu-section">
+              <div class="menu-header">MONITORING</div>
+              <a href="#" class="menu-item active">Dashboard</a>
+              <a href="#" class="menu-item">Live Metrics</a>
+              <a href="#" class="menu-item">Alert History</a>
+              <a href="#" class="menu-item">Performance</a>
+            </div>
+            
+            <div class="menu-section">
+              <div class="menu-header">ADMINISTRATION</div>
+              <a href="#" class="menu-item">User Management</a>
+              <a href="#" class="menu-item">System Settings</a>
+              <a href="#" class="menu-item">Security</a>
+              <a href="#" class="menu-item">Backup & Recovery</a>
+            </div>
+            
+            <div class="menu-section">
+              <div class="menu-header">DEVELOPMENT</div>
+              <a href="#" class="menu-item">Code Repository</a>
+              <a href="#" class="menu-item">Build Pipeline</a>
+              <a href="#" class="menu-item">Testing Suite</a>
+              <a href="#" class="menu-item">Documentation</a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Tab system
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all tabs and panels
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        button.classList.add('active');
+        
+        // Show corresponding panel
+        const tabId = button.dataset.tab;
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Sidebar menu
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Remove active class from all menu items
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        
+        // Add active class to clicked item
+        item.classList.add('active');
+      });
+    });
+
+    // Pagination demo
+    let currentPage = 1;
+    const totalPages = 25;
+
+    function goToPage(page) {
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        updatePagination();
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        updatePagination();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePagination();
+      }
+    }
+
+    function updatePagination() {
+      // Update active page button
+      document.querySelectorAll('.page-button').forEach(button => {
+        button.classList.remove('active');
+        if (button.textContent == currentPage) {
+          button.classList.add('active');
+        }
+      });
+      
+      // Update page info
+      const startRecord = (currentPage - 1) * 50 + 1;
+      const endRecord = Math.min(currentPage * 50, 1247);
+      document.querySelector('.page-info').textContent = 
+        `PAGE ${currentPage} OF ${totalPages} • SHOWING ${startRecord}-${endRecord} OF 1,247 RECORDS`;
+    }
+  </script>
+</body>
+</html>

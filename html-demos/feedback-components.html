@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Feedback Components Demo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    /* Grid system - CRITICAL FOR LAYOUT */
+    .grid-halves {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: stretch; /* Force equal column heights */
+    }
+    
+    /* Alert Boxes */
+    .fine-use-alert {
+      padding: var(--space-lg);
+      border: var(--border-thick) solid;
+      background-color: var(--fine-use-surface);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+    
+    .alert-success {
+      border-color: var(--fine-use-success);
+      border-left-width: var(--border-heavy);
+    }
+    
+    .alert-warning {
+      border-color: var(--fine-use-warning);
+      border-left-width: var(--border-heavy);
+    }
+    
+    .alert-error {
+      border-color: var(--fine-use-error);
+      border-left-width: var(--border-heavy);
+    }
+    
+    .alert-info {
+      border-color: var(--fine-use-info);
+      border-left-width: var(--border-heavy);
+    }
+    
+    .alert-icon {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 0.125rem;
+    }
+    
+    .alert-success .alert-icon { color: var(--fine-use-success); }
+    .alert-warning .alert-icon { color: var(--fine-use-warning); }
+    .alert-error .alert-icon { color: var(--fine-use-error); }
+    .alert-info .alert-icon { color: var(--fine-use-info); }
+    
+    .alert-content {
+      flex: 1;
+    }
+    
+    .alert-title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+    
+    .alert-message {
+      color: var(--fine-use-comment);
+      font-size: var(--text-md);
+      line-height: 1.5;
+    }
+    
+    .alert-close {
+      background: none;
+      border: none;
+      color: var(--fine-use-comment);
+      font-size: var(--text-xl);
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    
+    .alert-close:hover {
+      color: var(--fine-use-text);
+    }
+    
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: var(--space-xl);
+      right: var(--space-xl);
+      z-index: var(--z-tooltip);
+      width: 24rem;
+    }
+    
+    .fine-use-toast {
+      background-color: var(--fine-use-surface);
+      border: var(--border-thin) solid var(--fine-use-border);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      transform: translateX(100%);
+      transition: transform var(--transition-slow);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .fine-use-toast.show {
+      transform: translateX(0);
+    }
+    
+    .toast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .toast-title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    .toast-message {
+      color: var(--fine-use-comment);
+      font-size: var(--text-md);
+    }
+    
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: var(--z-modal);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-overlay.show {
+      display: flex;
+    }
+    
+    .fine-use-modal {
+      background-color: var(--fine-use-surface);
+      border: var(--border-thick) solid var(--fine-use-border);
+      width: 90%;
+      max-width: 32rem;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      padding: var(--space-lg);
+      border-bottom: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      margin: 0;
+      text-transform: uppercase;
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--fine-use-comment);
+      font-size: var(--text-xl);
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    
+    .modal-close:hover {
+      color: var(--fine-use-text);
+    }
+    
+    .modal-body {
+      padding: var(--space-xl);
+      background-color: var(--fine-use-bg);
+    }
+    
+    /* Loading Spinners */
+    .fine-use-loader {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+    }
+    
+    .loader-bars {
+      display: flex;
+      gap: 0.25rem;
+    }
+    
+    .loader-bar {
+      width: 0.25rem;
+      height: 2rem;
+      background-color: var(--fine-use-accent);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    .loader-bar:nth-child(2) { animation-delay: 0.1s; }
+    .loader-bar:nth-child(3) { animation-delay: 0.2s; }
+    .loader-bar:nth-child(4) { animation-delay: 0.3s; }
+    .loader-bar:nth-child(5) { animation-delay: 0.4s; }
+    
+    @keyframes pulse {
+      0%, 40%, 100% { transform: scaleY(0.4); }
+      20% { transform: scaleY(1); }
+    }
+    
+    .loader-text {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    /* Terminal Loader */
+    .loader-terminal {
+      font-family: inherit;
+      font-size: var(--text-lg);
+      color: var(--fine-use-success);
+      font-weight: 700;
+    }
+    
+    .loader-cursor {
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    /* Tooltips */
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .fine-use-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--fine-use-bg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--text-sm);
+      color: var(--fine-use-text);
+      white-space: nowrap;
+      z-index: var(--z-tooltip);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-fast);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .tooltip-container:hover .fine-use-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .fine-use-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 0.5rem solid transparent;
+      border-top-color: var(--fine-use-border);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">FEEDBACK COMPONENTS DEMO</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">COMPONENT TYPE:</span>
+        <span class="text-accent">USER FEEDBACK</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">INTERACTIVE</span>
+      </div>
+    </header>
+
+    <!-- Alert Boxes -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">ALERT NOTIFICATION SYSTEM</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">SYSTEM ALERTS</h3>
+        
+        <div class="fine-use-alert alert-success">
+          <div class="alert-icon">✓</div>
+          <div class="alert-content">
+            <div class="alert-title">DEPLOYMENT SUCCESSFUL</div>
+            <div class="alert-message">Application version 2.1.3 has been successfully deployed to production environment. All services are running normally.</div>
+          </div>
+          <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+        </div>
+        
+        <div class="fine-use-alert alert-warning">
+          <div class="alert-icon">⚠</div>
+          <div class="alert-content">
+            <div class="alert-title">HIGH CPU USAGE</div>
+            <div class="alert-message">Server load has exceeded 85% for the past 10 minutes. Consider scaling up resources or optimizing performance.</div>
+          </div>
+          <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+        </div>
+        
+        <div class="fine-use-alert alert-error">
+          <div class="alert-icon">✕</div>
+          <div class="alert-content">
+            <div class="alert-title">DATABASE CONNECTION FAILED</div>
+            <div class="alert-message">Unable to establish connection to primary database. Failover to backup database initiated. Please investigate immediately.</div>
+          </div>
+          <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+        </div>
+        
+        <div class="fine-use-alert alert-info">
+          <div class="alert-icon">ℹ</div>
+          <div class="alert-content">
+            <div class="alert-title">MAINTENANCE SCHEDULED</div>
+            <div class="alert-message">System maintenance is scheduled for tonight at 2:00 AM EST. Expected downtime: 30 minutes. All users will be notified.</div>
+          </div>
+          <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading States -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">LOADING & PROGRESS INDICATORS</h2>
+      
+      <div class="grid-halves gap-xl">
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">LOADING ANIMATIONS</h3>
+          
+          <div class="fine-use-loader">
+            <div class="loader-bars">
+              <div class="loader-bar"></div>
+              <div class="loader-bar"></div>
+              <div class="loader-bar"></div>
+              <div class="loader-bar"></div>
+              <div class="loader-bar"></div>
+            </div>
+            <span class="loader-text">PROCESSING DATA</span>
+          </div>
+          
+          <div style="margin-top: var(--space-lg);">
+            <div class="fine-use-loader">
+              <div class="loader-terminal">
+                INITIALIZING SYSTEM<span class="loader-cursor">█</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">TOOLTIPS & HELP</h3>
+          
+          <div class="button-grid button-grid-1x2">
+            <div class="tooltip-container">
+              <button class="fine-use-button grid-button" data-variant="primary">
+                DEPLOY TO PRODUCTION
+              </button>
+              <div class="fine-use-tooltip">
+                Deploys current build to production environment
+              </div>
+            </div>
+            
+            <div class="tooltip-container">
+              <button class="fine-use-button grid-button">
+                SYSTEM DIAGNOSTICS
+              </button>
+              <div class="fine-use-tooltip">
+                Runs comprehensive system health check
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Demos -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">INTERACTIVE FEEDBACK DEMO</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">TOAST & MODAL TRIGGERS</h3>
+        
+        <div class="button-grid button-grid-2x2">
+          <button class="fine-use-button grid-button" data-variant="primary" onclick="showToast('success', 'Operation Successful', 'Task completed successfully')">
+            SHOW SUCCESS TOAST
+          </button>
+          <button class="fine-use-button grid-button" onclick="showToast('warning', 'Warning Alert', 'Please review this action')">
+            SHOW WARNING TOAST
+          </button>
+          <button class="fine-use-button grid-button" onclick="showModal('confirm')">
+            SHOW CONFIRMATION
+          </button>
+          <button class="fine-use-button grid-button" data-variant="danger" onclick="showModal('delete')">
+            SHOW DELETE DIALOG
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal Templates -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="fine-use-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">CONFIRM ACTION</h3>
+        <button class="modal-close" onclick="hideModal('confirm-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--fine-use-text); font-size: var(--text-lg); margin-bottom: var(--space-lg);">
+          Are you sure you want to proceed with this operation? This action cannot be undone.
+        </p>
+        <div class="button-grid button-grid-halves gap-md">
+          <button class="fine-use-button grid-button" data-variant="primary" onclick="hideModal('confirm-modal')">
+            CONFIRM
+          </button>
+          <button class="fine-use-button grid-button" onclick="hideModal('confirm-modal')">
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="delete-modal">
+    <div class="fine-use-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">DELETE CONFIRMATION</h3>
+        <button class="modal-close" onclick="hideModal('delete-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="fine-use-alert alert-error" style="margin-bottom: var(--space-lg);">
+          <div class="alert-icon">⚠</div>
+          <div class="alert-content">
+            <div class="alert-title">DESTRUCTIVE ACTION</div>
+            <div class="alert-message">This will permanently delete the selected resource and all associated data.</div>
+          </div>
+        </div>
+        <p style="color: var(--fine-use-text); font-size: var(--text-lg); margin-bottom: var(--space-lg);">
+          Type <strong>DELETE</strong> to confirm this destructive action:
+        </p>
+        <div style="margin-bottom: var(--space-lg);">
+          <input type="text" class="fine-use-input" id="delete-confirm" placeholder="Type DELETE to confirm">
+        </div>
+        <div class="button-grid button-grid-halves gap-md">
+          <button class="fine-use-button grid-button" data-variant="danger" onclick="confirmDelete()">
+            DELETE PERMANENTLY
+          </button>
+          <button class="fine-use-button grid-button" onclick="hideModal('delete-modal')">
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Toast notifications
+    function showToast(type, title, message) {
+      const toastContainer = document.getElementById('toast-container');
+      
+      const toast = document.createElement('div');
+      toast.className = 'fine-use-toast';
+      toast.innerHTML = `
+        <div class="toast-header">
+          <span class="toast-title">${title}</span>
+          <button class="alert-close" onclick="removeToast(this)">×</button>
+        </div>
+        <div class="toast-message">${message}</div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      
+      // Animate in
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 100);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        removeToast(toast.querySelector('.alert-close'));
+      }, 5000);
+    }
+
+    function removeToast(button) {
+      const toast = button.closest('.fine-use-toast');
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }
+
+    // Modal system
+    function showModal(type) {
+      const modalId = type + '-modal';
+      const modal = document.getElementById(modalId);
+      modal.classList.add('show');
+      
+      if (type === 'delete') {
+        document.getElementById('delete-confirm').value = '';
+      }
+    }
+
+    function hideModal(modalId) {
+      document.getElementById(modalId).classList.remove('show');
+    }
+
+    function confirmDelete() {
+      const confirmInput = document.getElementById('delete-confirm');
+      if (confirmInput.value === 'DELETE') {
+        hideModal('delete-modal');
+        showToast('success', 'Resource Deleted', 'The resource has been permanently deleted');
+      } else {
+        confirmInput.style.borderColor = 'var(--fine-use-error)';
+        setTimeout(() => {
+          confirmInput.style.borderColor = 'var(--fine-use-border)';
+        }, 2000);
+      }
+    }
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('show');
+        }
+      });
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.show').forEach(modal => {
+          modal.classList.remove('show');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

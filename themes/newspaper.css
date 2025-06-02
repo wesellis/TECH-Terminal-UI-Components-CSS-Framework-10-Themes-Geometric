@@ -1,0 +1,113 @@
+/*
+ * Fine Use Design System v2.0 - Newspaper Theme
+ * 
+ * High contrast black and white print aesthetic
+ * Clean and readable like traditional newspapers
+ */
+
+:root[data-theme="newspaper"],
+[data-theme="newspaper"] {
+  /* Background hierarchy */
+  --fine-use-bg: #ffffff;
+  --fine-use-surface: #f8f8f8;
+  
+  /* Structure */
+  --fine-use-border: #000000;
+  
+  /* Text colors */
+  --fine-use-text: #000000;
+  --fine-use-comment: #666666;
+  
+  /* Status colors - semantic meanings preserved */
+  --fine-use-success: #006600;
+  --fine-use-warning: #cc6600;
+  --fine-use-error: #cc0000;
+  --fine-use-info: #0066cc;
+  
+  /* Theme personality - newspaper accents */
+  --fine-use-accent: #000000;
+  --fine-use-orange: #cc6600;
+}
+
+/* Newspaper styling */
+[data-theme="newspaper"] .fine-use-app {
+  background-color: var(--fine-use-bg);
+  color: var(--fine-use-text);
+}
+
+[data-theme="newspaper"] .current-value {
+  color: var(--fine-use-accent);
+  font-weight: 900;
+}
+
+[data-theme="newspaper"] .theme-dropdown option {
+  background-color: var(--fine-use-surface);
+  color: var(--fine-use-text);
+}
+
+/* Bold typography for newspaper feel */
+[data-theme="newspaper"] .fine-use-h1,
+[data-theme="newspaper"] .fine-use-h2,
+[data-theme="newspaper"] .fine-use-h3 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* Newspaper-specific animations */
+[data-theme="newspaper"] .log-entry.new {
+  animation: newspaper-highlight 1s ease-out;
+}
+
+@keyframes newspaper-highlight {
+  0% { 
+    background-color: var(--fine-use-accent);
+    color: var(--fine-use-bg);
+  }
+  100% { 
+    background-color: var(--fine-use-surface);
+    color: var(--fine-use-text);
+  }
+}
+
+/* Enhanced focus for Newspaper */
+[data-theme="newspaper"] .fine-use-focusable:focus {
+  outline: 4px solid var(--fine-use-accent);
+  outline-offset: 2px;
+  background-color: var(--fine-use-surface);
+}
+
+/* Strong borders for print aesthetic */
+[data-theme="newspaper"] .fine-use-component {
+  border: 3px solid var(--fine-use-border);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="newspaper"] .fine-use-data-table {
+  border: 4px double var(--fine-use-border);
+}
+
+[data-theme="newspaper"] .fine-use-data-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Print-style status indicators */
+[data-theme="newspaper"] .status-online {
+  background-color: var(--fine-use-success);
+  color: var(--fine-use-bg);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+[data-theme="newspaper"] .status-warning {
+  background-color: var(--fine-use-warning);
+  color: var(--fine-use-bg);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+[data-theme="newspaper"] .status-error {
+  background-color: var(--fine-use-error);
+  color: var(--fine-use-bg);
+  font-weight: 900;
+  text-transform: uppercase;
+}

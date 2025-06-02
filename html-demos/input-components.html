@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Input Components Demo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    .demo-grid {
+      display: grid;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+    
+    .demo-halves { grid-template-columns: 1fr 1fr; }
+    .demo-thirds { grid-template-columns: 1fr 1fr 1fr; }
+    
+    /* Input Components */
+    .fine-use-input {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 500;
+    }
+    
+    .fine-use-input:focus {
+      outline: 3px solid var(--fine-use-accent);
+      outline-offset: 2px;
+      border-color: var(--fine-use-accent);
+    }
+    
+    .fine-use-input::placeholder {
+      color: var(--fine-use-comment);
+    }
+    
+    .fine-use-textarea {
+      min-height: 8rem;
+      resize: vertical;
+      background-color: var(--fine-use-bg) !important;
+    }
+    
+    .input-group {
+      margin-bottom: var(--space-lg);
+    }
+    
+    .input-label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+    
+    /* Custom Select */
+    .fine-use-select {
+      position: relative;
+      width: 100%;
+    }
+    
+    .fine-use-select select {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 500;
+      cursor: pointer;
+      appearance: none;
+    }
+    
+    .fine-use-select::after {
+      content: "▼";
+      position: absolute;
+      right: var(--space-lg);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--fine-use-accent);
+      pointer-events: none;
+      font-size: var(--text-sm);
+    }
+    
+    .fine-use-select select:focus {
+      outline: 3px solid var(--fine-use-accent);
+      outline-offset: 2px;
+      border-color: var(--fine-use-accent);
+    }
+    
+    /* Checkbox System - COMPLETELY FIXED */
+    .fine-use-checkbox {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      cursor: pointer;
+    }
+    
+    .checkbox-input {
+      position: relative;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      cursor: pointer;
+    }
+    
+    .checkbox-input input {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      cursor: pointer;
+    }
+    
+    .checkbox-mark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--fine-use-accent);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    
+    .checkbox-input input:checked + .checkbox-mark {
+      opacity: 1;
+    }
+    
+    .checkbox-label {
+      font-size: var(--text-lg);
+      font-weight: 500;
+      color: var(--fine-use-text);
+      cursor: pointer;
+    }
+    
+    /* Radio System - FIXED */
+    .fine-use-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    
+    .fine-use-radio {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      cursor: pointer;
+    }
+    
+    .radio-input {
+      position: relative;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      cursor: pointer;
+    }
+    
+    .radio-input input {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      cursor: pointer;
+    }
+    
+    .radio-mark {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background-color: var(--fine-use-accent);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    
+    .radio-input input:checked + .radio-mark {
+      opacity: 1;
+    }
+    
+    /* Search Box */
+    .fine-use-search {
+      position: relative;
+      width: 100%;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: var(--space-md) var(--space-xl) var(--space-md) var(--space-lg);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+    }
+    
+    .search-icon {
+      position: absolute;
+      right: var(--space-lg);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--fine-use-accent);
+      font-weight: 700;
+    }
+    
+    /* Number Input */
+    .fine-use-number {
+      display: flex;
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+    }
+    
+    .number-input {
+      flex: 1;
+      padding: var(--space-md) var(--space-lg);
+      border: none;
+      background: transparent;
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      text-align: center;
+    }
+    
+    .number-btn {
+      width: 3rem;
+      border: none;
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+    
+    .number-btn:hover {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">INPUT COMPONENTS DEMO</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">COMPONENT TYPE:</span>
+        <span class="text-accent">INPUT ELEMENTS</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">INTERACTIVE</span>
+      </div>
+    </header>
+
+    <!-- Text Inputs Section -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">TEXT INPUT ELEMENTS</h2>
+      
+      <div class="demo-grid demo-halves">
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">STANDARD TEXT INPUTS</h3>
+          
+          <div class="input-group">
+            <label class="input-label">USERNAME</label>
+            <input type="text" class="fine-use-input" placeholder="Enter username...">
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">EMAIL ADDRESS</label>
+            <input type="email" class="fine-use-input" placeholder="user@domain.com">
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">PASSWORD</label>
+            <input type="password" class="fine-use-input" placeholder="••••••••">
+          </div>
+        </div>
+        
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">TEXTAREA & SEARCH</h3>
+          
+          <div class="input-group">
+            <label class="input-label">DESCRIPTION</label>
+            <textarea class="fine-use-input fine-use-textarea" placeholder="Enter detailed description..."></textarea>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">SEARCH SYSTEM</label>
+            <div class="fine-use-search">
+              <input type="text" class="search-input" placeholder="Search logs, services, metrics...">
+              <span class="search-icon">⚡</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selection Components -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">SELECTION COMPONENTS</h2>
+      
+      <div class="demo-grid demo-thirds">
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">CUSTOM SELECT</h3>
+          
+          <div class="input-group">
+            <label class="input-label">SERVER LOCATION</label>
+            <div class="fine-use-select">
+              <select>
+                <option>US-EAST-1</option>
+                <option>US-WEST-2</option>
+                <option>EU-CENTRAL-1</option>
+                <option>ASIA-PACIFIC-1</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">INSTANCE TYPE</label>
+            <div class="fine-use-select">
+              <select>
+                <option>t3.micro</option>
+                <option>t3.small</option>
+                <option>t3.medium</option>
+                <option>t3.large</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">CHECKBOX SYSTEM</h3>
+          
+          <label class="input-label">ENABLED FEATURES</label>
+          
+          <label class="fine-use-checkbox">
+            <div class="checkbox-input">
+              <input type="checkbox" checked>
+              <span class="checkbox-mark">✓</span>
+            </div>
+            <span class="checkbox-label">AUTO SCALING</span>
+          </label>
+          
+          <label class="fine-use-checkbox">
+            <div class="checkbox-input">
+              <input type="checkbox">
+              <span class="checkbox-mark">✓</span>
+            </div>
+            <span class="checkbox-label">LOAD BALANCING</span>
+          </label>
+          
+          <label class="fine-use-checkbox">
+            <div class="checkbox-input">
+              <input type="checkbox" checked>
+              <span class="checkbox-mark">✓</span>
+            </div>
+            <span class="checkbox-label">MONITORING</span>
+          </label>
+          
+          <label class="fine-use-checkbox">
+            <div class="checkbox-input">
+              <input type="checkbox">
+              <span class="checkbox-mark">✓</span>
+            </div>
+            <span class="checkbox-label">BACKUP SYSTEM</span>
+          </label>
+        </div>
+        
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">RADIO BUTTONS</h3>
+          
+          <label class="input-label">DEPLOYMENT MODE</label>
+          
+          <div class="fine-use-radio-group">
+            <label class="fine-use-radio">
+              <div class="radio-input">
+                <input type="radio" name="deployment" value="production" checked>
+                <span class="radio-mark"></span>
+              </div>
+              <span class="checkbox-label">PRODUCTION</span>
+            </label>
+            
+            <label class="fine-use-radio">
+              <div class="radio-input">
+                <input type="radio" name="deployment" value="staging">
+                <span class="radio-mark"></span>
+              </div>
+              <span class="checkbox-label">STAGING</span>
+            </label>
+            
+            <label class="fine-use-radio">
+              <div class="radio-input">
+                <input type="radio" name="deployment" value="development">
+                <span class="radio-mark">●</span>
+              </div>
+              <span class="checkbox-label">DEVELOPMENT</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Numeric Inputs -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">NUMERIC INPUT CONTROLS</h2>
+      
+      <div class="demo-grid demo-halves">
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">NUMBER STEPPERS</h3>
+          
+          <div class="input-group">
+            <label class="input-label">CPU CORES</label>
+            <div class="fine-use-number">
+              <button class="number-btn" onclick="decrementValue('cpu-cores')">-</button>
+              <input type="number" class="number-input" id="cpu-cores" value="4" min="1" max="32">
+              <button class="number-btn" onclick="incrementValue('cpu-cores')">+</button>
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">MEMORY (GB)</label>
+            <div class="fine-use-number">
+              <button class="number-btn" onclick="decrementValue('memory-gb')">-</button>
+              <input type="number" class="number-input" id="memory-gb" value="8" min="1" max="128">
+              <button class="number-btn" onclick="incrementValue('memory-gb')">+</button>
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">STORAGE (TB)</label>
+            <div class="fine-use-number">
+              <button class="number-btn" onclick="decrementValue('storage-tb')">-</button>
+              <input type="number" class="number-input" id="storage-tb" value="1" min="1" max="16">
+              <button class="number-btn" onclick="incrementValue('storage-tb')">+</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">FORM VALIDATION</h3>
+          
+          <div class="input-group">
+            <label class="input-label">SERVER NAME</label>
+            <input type="text" class="fine-use-input" placeholder="srv-prod-001" pattern="^srv-[a-z]+-[0-9]+$">
+            <div class="text-comment text-sm mt-2">Format: srv-environment-number</div>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">PORT NUMBER</label>
+            <input type="number" class="fine-use-input" value="8080" min="1" max="65535">
+            <div class="text-comment text-sm mt-2">Range: 1-65535</div>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">API ENDPOINT</label>
+            <input type="url" class="fine-use-input" placeholder="https://api.domain.com/v1">
+            <div class="text-comment text-sm mt-2">Must be valid HTTPS URL</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">FORM ACTIONS</h2>
+      
+      <div class="fine-use-component">
+        <div class="button-grid button-grid-2x2">
+          <button class="fine-use-button grid-button" data-variant="primary">
+            SAVE CONFIGURATION
+          </button>
+          <button class="fine-use-button grid-button">
+            RESET TO DEFAULTS
+          </button>
+          <button class="fine-use-button grid-button" data-variant="info">
+            TEST CONNECTION
+          </button>
+          <button class="fine-use-button grid-button" data-variant="danger">
+            DELETE SETTINGS
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Number input controls
+    function incrementValue(id) {
+      const input = document.getElementById(id);
+      const max = parseInt(input.max) || Infinity;
+      const current = parseInt(input.value) || 0;
+      if (current < max) {
+        input.value = current + 1;
+      }
+    }
+
+    function decrementValue(id) {
+      const input = document.getElementById(id);
+      const min = parseInt(input.min) || 0;
+      const current = parseInt(input.value) || 0;
+      if (current > min) {
+        input.value = current - 1;
+      }
+    }
+
+    // Form validation demo
+    document.querySelectorAll('.fine-use-input').forEach(input => {
+      input.addEventListener('invalid', (e) => {
+        e.target.style.borderColor = 'var(--fine-use-error)';
+      });
+      
+      input.addEventListener('input', (e) => {
+        e.target.style.borderColor = 'var(--fine-use-border)';
+      });
+    });
+  </script>
+</body>
+</html>

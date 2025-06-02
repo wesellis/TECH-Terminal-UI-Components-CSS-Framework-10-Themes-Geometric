@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Button Grid Alignment Test</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    /* Grid test helper */
+    .grid-test {
+      outline: 2px dashed var(--fine-use-accent);
+      padding: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    
+    .grid-test-label {
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">BUTTON GRID ALIGNMENT TEST</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">PURPOSE:</span>
+        <span class="text-accent">PERFECT ALIGNMENT VERIFICATION</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">FIXED</span>
+      </div>
+    </header>
+
+    <!-- Button Grid Tests -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">BUTTON GRID SYSTEM TESTS</h2>
+      
+      <!-- 2x2 Grid Test -->
+      <div class="grid-test">
+        <div class="grid-test-label">2x2 BUTTON GRID - ALL BUTTONS SAME SIZE</div>
+        <div class="button-grid button-grid-2x2">
+          <button class="fine-use-button grid-button" data-variant="primary">
+            START SERVICES
+          </button>
+          <button class="fine-use-button grid-button">
+            STOP ALL PROCESSES
+          </button>
+          <button class="fine-use-button grid-button">
+            RESTART LOAD BALANCER WITH LONGER TEXT
+          </button>
+          <button class="fine-use-button grid-button" data-variant="danger">
+            EMERGENCY SHUTDOWN
+          </button>
+        </div>
+      </div>
+      
+      <!-- 1x4 Grid Test -->
+      <div class="grid-test">
+        <div class="grid-test-label">1x4 VERTICAL BUTTON STACK - CONSISTENT HEIGHTS</div>
+        <div class="button-grid button-grid-1x4">
+          <button class="fine-use-button grid-button" data-variant="primary">
+            PRIMARY ACTION
+          </button>
+          <button class="fine-use-button grid-button">
+            SECONDARY ACTION
+          </button>
+          <button class="fine-use-button grid-button">
+            TERTIARY ACTION WITH MUCH LONGER TEXT THAT WRAPS
+          </button>
+          <button class="fine-use-button grid-button" data-variant="danger">
+            DANGER
+          </button>
+        </div>
+      </div>
+      
+      <!-- Halves Grid Test -->
+      <div class="grid-test">
+        <div class="grid-test-label">HALVES BUTTON GRID - TWO EQUAL BUTTONS</div>
+        <div class="button-grid button-grid-halves">
+          <button class="fine-use-button grid-button" data-variant="primary">
+            CONFIRM ACTION
+          </button>
+          <button class="fine-use-button grid-button">
+            CANCEL
+          </button>
+        </div>
+      </div>
+      
+      <!-- Thirds Grid Test -->
+      <div class="grid-test">
+        <div class="grid-test-label">THIRDS BUTTON GRID - THREE EQUAL BUTTONS</div>
+        <div class="button-grid button-grid-thirds">
+          <button class="fine-use-button grid-button" data-variant="primary">
+            SAVE
+          </button>
+          <button class="fine-use-button grid-button" data-variant="info">
+            PREVIEW
+          </button>
+          <button class="fine-use-button grid-button">
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Column Grid Tests -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">COLUMN ALIGNMENT TESTS</h2>
+      
+      <!-- Three Columns Test -->
+      <div class="grid-test">
+        <div class="grid-test-label">THREE EQUAL COLUMNS - FORCED SAME HEIGHT</div>
+        <div class="grid-thirds gap-xl">
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">COLUMN ONE</h3>
+            <p style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              This column has some content that takes up space. The button grid should be at the bottom.
+            </p>
+            <div class="button-grid button-grid-2x2">
+              <button class="fine-use-button grid-button" data-variant="primary">A</button>
+              <button class="fine-use-button grid-button">B</button>
+              <button class="fine-use-button grid-button">C</button>
+              <button class="fine-use-button grid-button">D</button>
+            </div>
+          </div>
+          
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">COLUMN TWO</h3>
+            <p style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              This column has much more content to test whether the columns stay aligned even when one has more text content than the others. The button grids should all line up perfectly.
+            </p>
+            <div class="button-grid button-grid-1x4">
+              <button class="fine-use-button grid-button">1</button>
+              <button class="fine-use-button grid-button">2</button>
+              <button class="fine-use-button grid-button">3</button>
+              <button class="fine-use-button grid-button">4</button>
+            </div>
+          </div>
+          
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">COLUMN THREE</h3>
+            <p style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              Short content.
+            </p>
+            <div class="button-grid button-grid-halves">
+              <button class="fine-use-button grid-button" data-variant="info">YES</button>
+              <button class="fine-use-button grid-button" data-variant="danger">NO</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Two Columns Test -->
+      <div class="grid-test">
+        <div class="grid-test-label">TWO EQUAL COLUMNS - DIFFERENT CONTENT HEIGHTS</div>
+        <div class="grid-halves gap-xl">
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">LEFT COLUMN</h3>
+            <p style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              This left column has a significant amount of content that will make it taller than the right column. However, both columns should have the same total height, and the button grids should align at the bottom.
+            </p>
+            <p style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              Additional paragraph to make this column even taller and test the alignment system more thoroughly.
+            </p>
+            <div class="button-grid button-grid-2x2">
+              <button class="fine-use-button grid-button" data-variant="primary">ACTION 1</button>
+              <button class="fine-use-button grid-button">ACTION 2</button>
+              <button class="fine-use-button grid-button">ACTION 3</button>
+              <button class="fine-use-button grid-button" data-variant="danger">ACTION 4</button>
+            </div>
+          </div>
+          
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">RIGHT COLUMN</h3>
+            <p style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              Minimal content here.
+            </p>
+            <div class="button-grid button-grid-1x3">
+              <button class="fine-use-button grid-button" data-variant="primary">OPTION A</button>
+              <button class="fine-use-button grid-button" data-variant="info">OPTION B</button>
+              <button class="fine-use-button grid-button">OPTION C</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mixed Content Test -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">MIXED COMPONENT ALIGNMENT TEST</h2>
+      
+      <div class="grid-test">
+        <div class="grid-test-label">COMPLEX LAYOUT - MULTIPLE COMPONENT TYPES</div>
+        <div class="grid-thirds gap-xl">
+          <!-- Data Component -->
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">DATA DISPLAY</h3>
+            <div class="fine-use-progress-group">
+              <div class="fine-use-progress-item">
+                <label class="progress-label">CPU USAGE</label>
+                <div class="progress-container">
+                  <div class="progress-bar status-success" style="width: 45%"></div>
+                </div>
+                <span class="progress-value">45%</span>
+              </div>
+              <div class="fine-use-progress-item">
+                <label class="progress-label">MEMORY</label>
+                <div class="progress-container">
+                  <div class="progress-bar status-warning" style="width: 78%"></div>
+                </div>
+                <span class="progress-value">78%</span>
+              </div>
+            </div>
+            <div class="button-grid button-grid-halves" style="margin-top: var(--space-lg);">
+              <button class="fine-use-button grid-button">REFRESH</button>
+              <button class="fine-use-button grid-button" data-variant="info">DETAILS</button>
+            </div>
+          </div>
+          
+          <!-- Status Component -->
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">SERVICE STATUS</h3>
+            <div style="margin-bottom: var(--space-lg);">
+              <div class="fine-use-service-status" style="margin-bottom: var(--space-md);">
+                <div class="status-indicator-box" data-status="operational"></div>
+                <div class="service-info">
+                  <div class="service-name">DATABASE</div>
+                  <div class="service-uptime">99.9%</div>
+                </div>
+                <div class="status-label status-operational">ONLINE</div>
+              </div>
+              <div class="fine-use-service-status">
+                <div class="status-indicator-box" data-status="degraded"></div>
+                <div class="service-info">
+                  <div class="service-name">API GATEWAY</div>
+                  <div class="service-uptime">97.2%</div>
+                </div>
+                <div class="status-label status-degraded">DEGRADED</div>
+              </div>
+            </div>
+            <div class="button-grid button-grid-1x2">
+              <button class="fine-use-button grid-button" data-variant="primary">RESTART SERVICES</button>
+              <button class="fine-use-button grid-button" data-variant="danger">EMERGENCY STOP</button>
+            </div>
+          </div>
+          
+          <!-- Control Component -->
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">SYSTEM CONTROLS</h3>
+            <div style="color: var(--fine-use-comment); margin-bottom: var(--space-lg);">
+              Quick access to system operations and maintenance functions.
+            </div>
+            <div class="button-grid button-grid-2x2">
+              <button class="fine-use-button grid-button" data-variant="primary">DEPLOY</button>
+              <button class="fine-use-button grid-button">ROLLBACK</button>
+              <button class="fine-use-button grid-button" data-variant="info">BACKUP</button>
+              <button class="fine-use-button grid-button">MAINTENANCE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification Section -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">ALIGNMENT VERIFICATION</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">EXPECTED RESULTS</h3>
+        <div style="color: var(--fine-use-comment); line-height: 1.6;">
+          <p style="margin-bottom: var(--space-md);">✅ <strong style="color: var(--fine-use-success);">All buttons in each grid should be exactly the same size</strong></p>
+          <p style="margin-bottom: var(--space-md);">✅ <strong style="color: var(--fine-use-success);">Button grids should have consistent heights across the system</strong></p>
+          <p style="margin-bottom: var(--space-md);">✅ <strong style="color: var(--fine-use-success);">Columns in grid layouts should be exactly the same height</strong></p>
+          <p style="margin-bottom: var(--space-md);">✅ <strong style="color: var(--fine-use-success);">Button grids should align at the bottom of their containers</strong></p>
+          <p style="margin-bottom: var(--space-md);">✅ <strong style="color: var(--fine-use-success);">Long text should wrap properly within buttons</strong></p>
+          <p>✅ <strong style="color: var(--fine-use-success);">All layouts should maintain geometric precision</strong></p>
+        </div>
+        
+        <div class="button-grid button-grid-halves" style="margin-top: var(--space-xl);">
+          <button class="fine-use-button grid-button" data-variant="primary" onclick="alert('Button grids are now perfectly aligned!')">
+            ALIGNMENT VERIFIED
+          </button>
+          <button class="fine-use-button grid-button" onclick="randomTheme()">
+            TEST DIFFERENT THEME
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    const themes = ['github-dark', 'github-light', 'amber', 'gruvbox', 'monochrome', 'monokai', 'newspaper', 'sakura', 'synthwave', 'vt220'];
+    
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Random theme function for testing
+    function randomTheme() {
+      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+      document.documentElement.setAttribute('data-theme', randomTheme);
+      themeSelect.value = randomTheme;
+    }
+  </script>
+</body>
+</html>

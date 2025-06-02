@@ -1,0 +1,83 @@
+/*
+ * Fine Use Design System v2.0 - Sakura Theme
+ * 
+ * Soft pink feminine terminal aesthetic
+ * Maintains geometric precision with warm pink colors
+ */
+
+:root[data-theme="sakura"],
+[data-theme="sakura"] {
+  /* Background hierarchy */
+  --fine-use-bg: #2d1b2e;
+  --fine-use-surface: #3d2b3e;
+  
+  /* Structure */
+  --fine-use-border: #8b4d8b;
+  
+  /* Text colors */
+  --fine-use-text: #f4e4f4;
+  --fine-use-comment: #a66ba6;
+  
+  /* Status colors - semantic meanings preserved */
+  --fine-use-success: #7dd3c0;
+  --fine-use-warning: #fdc4db;
+  --fine-use-error: #ff6b9d;
+  --fine-use-info: #c589e8;
+  
+  /* Theme personality - pink accents */
+  --fine-use-accent: #f093fb;
+  --fine-use-orange: #ff9a9e;
+}
+
+/* Sakura styling */
+[data-theme="sakura"] .fine-use-app {
+  background-color: var(--fine-use-bg);
+  color: var(--fine-use-text);
+}
+
+[data-theme="sakura"] .current-value {
+  color: var(--fine-use-accent);
+}
+
+[data-theme="sakura"] .theme-dropdown option {
+  background-color: var(--fine-use-surface);
+  color: var(--fine-use-text);
+}
+
+/* Sakura-specific animations */
+[data-theme="sakura"] .log-entry.new {
+  animation: sakura-highlight 1s ease-out;
+}
+
+@keyframes sakura-highlight {
+  0% { 
+    background-color: var(--fine-use-accent);
+    color: var(--fine-use-bg);
+  }
+  100% { 
+    background-color: var(--fine-use-surface);
+    color: var(--fine-use-text);
+  }
+}
+
+/* Enhanced focus for Sakura */
+[data-theme="sakura"] .fine-use-focusable:focus {
+  outline: 3px solid var(--fine-use-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(240, 147, 251, 0.3);
+}
+
+/* Soft glowing components */
+[data-theme="sakura"] .fine-use-component {
+  border: 2px solid var(--fine-use-border);
+  box-shadow: 0 0 8px rgba(240, 147, 251, 0.1);
+}
+
+[data-theme="sakura"] .status-badge {
+  box-shadow: 0 0 6px rgba(240, 147, 251, 0.2);
+}
+
+/* Table interactions */
+[data-theme="sakura"] .fine-use-data-table tr:hover {
+  background-color: rgba(240, 147, 251, 0.1);
+}

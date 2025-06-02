@@ -1,0 +1,305 @@
+/*
+ * Fine Use Design System - Fixed Button Grid System
+ * 
+ * Ensures perfect alignment and matching sizes for all button grids
+ * across all HTML demos. This fixes the inconsistent button heights
+ * and column alignment issues.
+ */
+
+/* ==========================================================================
+   BUTTON GRID SYSTEM - CORE FOUNDATION
+   ========================================================================== */
+
+/* Base button grid - forces equal height and width for all buttons */
+.button-grid {
+  display: grid;
+  gap: var(--space-md, 1rem);
+  width: 100%;
+  align-items: stretch; /* Force all buttons to same height */
+  justify-items: stretch; /* Force all buttons to same width */
+}
+
+/* Grid Layout Variants with Fixed Heights */
+.button-grid-2x2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  min-height: 8rem; /* Ensures 4rem per button */
+  height: 8rem; /* Fixed height for consistency */
+}
+
+.button-grid-1x4 {
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  min-height: 16rem; /* 4rem per button */
+  height: 16rem; /* Fixed height for consistency */
+}
+
+.button-grid-1x3 {
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  min-height: 12rem; /* 4rem per button */
+  height: 12rem; /* Fixed height for consistency */
+}
+
+.button-grid-1x2 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  min-height: 8rem; /* 4rem per button */
+  height: 8rem; /* Fixed height for consistency */
+}
+
+.button-grid-halves {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  min-height: 4rem;
+  height: 4rem; /* Fixed height for consistency */
+}
+
+.button-grid-thirds {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  min-height: 4rem;
+  height: 4rem; /* Fixed height for consistency */
+}
+
+.button-grid-quarters {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  min-height: 4rem;
+  height: 4rem; /* Fixed height for consistency */
+}
+
+/* Grid buttons - consistent sizing for ALL grid buttons */
+.fine-use-button.grid-button {
+  width: 100%;
+  height: 100%; /* Use full grid cell height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-md);
+  box-sizing: border-box;
+  min-height: 3.5rem; /* Minimum button height */
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.2; /* Tight line height for multi-line text */
+  word-wrap: break-word;
+}
+
+/* Ensure text wraps properly in grid buttons */
+.fine-use-button.grid-button span {
+  display: block;
+  width: 100%;
+}
+
+/* ==========================================================================
+   COLUMN ALIGNMENT FIXES
+   ========================================================================== */
+
+/* Enhanced grid system with forced equal heights */
+.grid-thirds {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: stretch; /* Force equal column heights */
+}
+
+.grid-halves {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: stretch; /* Force equal column heights */
+}
+
+.grid-main-sidebar {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-xl);
+  align-items: stretch; /* Force equal column heights */
+}
+
+/* Column content wrapper - ensures full height usage */
+.grid-column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Fine Use components in grids take full height */
+.grid-thirds .fine-use-component,
+.grid-halves .fine-use-component,
+.grid-main-sidebar .fine-use-component {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Component content fills available space */
+.grid-thirds .fine-use-component > *:last-child,
+.grid-halves .fine-use-component > *:last-child,
+.grid-main-sidebar .fine-use-component > *:last-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Button grids in components take remaining space */
+.fine-use-component .button-grid {
+  margin-top: auto; /* Push to bottom if needed */
+}
+
+/* ==========================================================================
+   SPECIFIC BUTTON FIXES
+   ========================================================================== */
+
+/* All buttons in the system have consistent styling */
+.fine-use-button {
+  padding: var(--space-md) var(--space-xl);
+  border: var(--border-thin) solid var(--fine-use-border);
+  background-color: var(--fine-use-surface);
+  color: var(--fine-use-text);
+  font-family: inherit;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  min-height: 3.5rem; /* Consistent minimum height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Control buttons for smaller spaces */
+.control-button {
+  padding: var(--space-sm) var(--space-md);
+  border: var(--border-thin) solid var(--fine-use-border);
+  background-color: var(--fine-use-bg);
+  color: var(--fine-use-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  min-height: 2.5rem; /* Smaller but consistent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   DEMO-SPECIFIC FIXES
+   ========================================================================== */
+
+/* Demo cards in component index should have equal heights */
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.demo-card .demo-description {
+  flex: 1; /* Take available space */
+  margin-bottom: var(--space-lg);
+}
+
+.demo-card .demo-link {
+  margin-top: auto; /* Push to bottom */
+}
+
+/* Stats grid cards should be equal height */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  align-items: stretch; /* Force equal heights */
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 8rem; /* Consistent height */
+}
+
+/* Theme preview cards equal height */
+.theme-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-lg);
+  border: var(--border-thin) solid var(--fine-use-border);
+  background-color: var(--fine-use-bg);
+  min-height: 6rem; /* Consistent height */
+  text-align: center;
+}
+
+/* ==========================================================================
+   MODAL BUTTON FIXES
+   ========================================================================== */
+
+/* Modal button grids need consistent sizing */
+.modal-body .button-grid .fine-use-button {
+  height: 3.5rem; /* Fixed height for modal buttons */
+}
+
+/* Modal button grids */
+.modal-body .button-grid-halves {
+  height: 3.5rem; /* Single row height */
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE CONSIDERATIONS
+   ========================================================================== */
+
+/* Maintain grid integrity even on smaller screens */
+@media (max-width: 768px) {
+  /* Keep button grid proportions but adjust sizing */
+  .button-grid-2x2 {
+    height: 10rem; /* Slightly taller for mobile */
+  }
+  
+  .fine-use-button.grid-button {
+    font-size: var(--text-md); /* Slightly smaller text */
+    padding: var(--space-sm);
+  }
+  
+  /* Ensure grid columns still work on mobile */
+  .grid-thirds {
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: var(--space-lg);
+  }
+  
+  .grid-halves {
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: var(--space-lg);
+  }
+}
+
+/* ==========================================================================
+   DEBUGGING HELPERS (Remove in production)
+   ========================================================================== */
+
+/* Uncomment these for visual debugging */
+/*
+.button-grid {
+  outline: 2px dashed red;
+}
+
+.fine-use-button.grid-button {
+  outline: 1px solid blue;
+}
+
+.grid-thirds > *,
+.grid-halves > * {
+  outline: 1px solid green;
+}
+*/

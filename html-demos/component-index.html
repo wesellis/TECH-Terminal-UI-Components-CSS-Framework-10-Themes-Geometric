@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use Design System - Component Demos</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    .demo-card {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      padding: var(--space-xl);
+      transition: all var(--transition-fast);
+    }
+    
+    .demo-card:hover {
+      border-color: var(--fine-use-accent);
+      transform: translateY(-2px);
+    }
+    
+    .demo-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+    }
+    
+    .demo-description {
+      color: var(--fine-use-comment);
+      font-size: var(--text-lg);
+      line-height: 1.6;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .demo-link {
+      display: inline-block;
+      padding: var(--space-md) var(--space-xl);
+      border: var(--border-thin) solid var(--fine-use-accent);
+      background-color: var(--fine-use-accent);
+      color: var(--fine-use-bg);
+      text-decoration: none;
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all var(--transition-fast);
+    }
+    
+    .demo-link:hover {
+      background-color: var(--fine-use-bg);
+      color: var(--fine-use-accent);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xxl);
+    }
+    
+    .stat-card {
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-bg);
+      padding: var(--space-lg);
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      color: var(--fine-use-accent);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .stat-label {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--fine-use-text);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">FINE USE DESIGN SYSTEM</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">VERSION:</span>
+        <span class="text-white">1.1.0</span>
+        <span class="text-comment">COMPONENTS:</span>
+        <span class="text-accent">55+</span>
+        <span class="text-comment">THEMES:</span>
+        <span class="text-info">10</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">PRODUCTION READY</span>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Themes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">55+</div>
+        <div class="stat-label">Components</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Accessible</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Rounded Corners</div>
+      </div>
+    </section>
+
+    <!-- Component Demos -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">COMPONENT DEMONSTRATIONS</h2>
+      
+      <div class="grid-thirds gap-xl">
+        
+        <!-- Full System Demo -->
+        <div class="demo-card">
+          <h3 class="demo-title">COMPLETE SYSTEM</h3>
+          <p class="demo-description">
+            Full dashboard demonstration with all components working together. 
+            Real-time data updates, interactive controls, and live theme switching.
+          </p>
+          <a href="index.html" class="demo-link">VIEW FULL DEMO</a>
+        </div>
+        
+        <!-- Input Components -->
+        <div class="demo-card">
+          <h3 class="demo-title">INPUT COMPONENTS</h3>
+          <p class="demo-description">
+            Text inputs, selects, checkboxes, radio buttons, and number steppers. 
+            All form elements with validation and terminal aesthetics.
+          </p>
+          <a href="input-components.html" class="demo-link">VIEW INPUTS</a>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="demo-card">
+          <h3 class="demo-title">NAVIGATION</h3>
+          <p class="demo-description">
+            Tabs, breadcrumbs, pagination, and sidebar menus. 
+            Complete navigation system for complex applications.
+          </p>
+          <a href="navigation-components.html" class="demo-link">VIEW NAVIGATION</a>
+        </div>
+        
+        <!-- Feedback -->
+        <div class="demo-card">
+          <h3 class="demo-title">FEEDBACK SYSTEM</h3>
+          <p class="demo-description">
+            Alerts, modals, toast notifications, tooltips, and loading states. 
+            Complete user feedback and interaction system.
+          </p>
+          <a href="feedback-components.html" class="demo-link">VIEW FEEDBACK</a>
+        </div>
+        
+        <!-- Data Display -->
+        <div class="demo-card">
+          <h3 class="demo-title">DATA DISPLAY</h3>
+          <p class="demo-description">
+            Tables, graphs, progress bars, and status indicators. 
+            Real-time data visualization components.
+          </p>
+          <a href="index.html#data-display" class="demo-link">VIEW DATA</a>
+        </div>
+        
+        <!-- Block Visualizations -->
+        <div class="demo-card">
+          <h3 class="demo-title">BLOCK VISUALIZATIONS</h3>
+          <p class="demo-description">
+            Defragger-style grids, event blocks, and timeline chapters.
+            Perfect for system monitoring and status visualization.
+          </p>
+          <a href="block-visualizations.html" class="demo-link">VIEW BLOCKS</a>
+        </div>
+        
+        <!-- Image Components -->
+        <div class="demo-card">
+          <h3 class="demo-title">IMAGE COMPONENTS</h3>
+          <p class="demo-description">
+            User avatars, system diagrams, file previews, and brand components.
+            Function-first approach to image handling.
+          </p>
+          <a href="image-components.html" class="demo-link">VIEW IMAGES</a>
+        </div>
+        
+        <!-- Terminal Components -->
+        <div class="demo-card">
+          <h3 class="demo-title">TERMINAL COMPONENTS</h3>
+          <p class="demo-description">
+            Advanced terminal interfaces, code editors, hex viewers, and system monitors.
+            Hardcore terminal aesthetics for power users.
+          </p>
+          <a href="terminal-components.html" class="demo-link">VIEW TERMINAL</a>
+        </div>
+        
+        <!-- Layout System -->
+        <div class="demo-card">
+          <h3 class="demo-title">LAYOUT SYSTEM</h3>
+          <p class="demo-description">
+            Grid layouts, spacing utilities, and component composition. 
+            Mathematical precision in every layout.
+          </p>
+          <a href="index.html#layout" class="demo-link">VIEW LAYOUTS</a>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Theme Showcase -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">THEME GALLERY</h2>
+      
+      <div class="fine-use-component">
+        <h3 class="fine-use-h3">AVAILABLE THEMES (10 TOTAL)</h3>
+        
+        <div class="grid-thirds gap-lg">
+          <div class="theme-preview" data-theme="github-dark">
+            <div class="text-lg font-bold text-accent">GITHUB DARK</div>
+            <div class="text-comment">Professional dark theme (default)</div>
+          </div>
+          <div class="theme-preview" data-theme="github-light">
+            <div class="text-lg font-bold text-accent">GITHUB LIGHT</div>
+            <div class="text-comment">Professional light theme</div>
+          </div>
+          <div class="theme-preview" data-theme="amber">
+            <div class="text-lg font-bold text-accent">AMBER TERMINAL</div>
+            <div class="text-comment">Classic CRT monitor amber</div>
+          </div>
+          <div class="theme-preview" data-theme="gruvbox">
+            <div class="text-lg font-bold text-accent">GRUVBOX</div>
+            <div class="text-comment">Warm earth tones</div>
+          </div>
+          <div class="theme-preview" data-theme="monochrome">
+            <div class="text-lg font-bold text-accent">MONOCHROME</div>
+            <div class="text-comment">Maximum contrast</div>
+          </div>
+          <div class="theme-preview" data-theme="monokai">
+            <div class="text-lg font-bold text-accent">MONOKAI</div>
+            <div class="text-comment">Warm retro coding</div>
+          </div>
+          <div class="theme-preview" data-theme="newspaper">
+            <div class="text-lg font-bold text-accent">NEWSPAPER</div>
+            <div class="text-comment">Print aesthetic</div>
+          </div>
+          <div class="theme-preview" data-theme="sakura">
+            <div class="text-lg font-bold text-accent">SAKURA</div>
+            <div class="text-comment">Soft pink theme</div>
+          </div>
+          <div class="theme-preview" data-theme="synthwave">
+            <div class="text-lg font-bold text-accent">SYNTHWAVE</div>
+            <div class="text-comment">80s cyberpunk</div>
+          </div>
+          <div class="theme-preview" data-theme="vt220">
+            <div class="text-lg font-bold text-accent">VT220</div>
+            <div class="text-comment">Vintage terminal</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">QUICK ACTIONS</h2>
+      
+      <div class="fine-use-component">
+        <div class="button-grid button-grid-2x2">
+          <button class="fine-use-button grid-button" data-variant="primary" onclick="randomTheme()">
+            RANDOM THEME
+          </button>
+          <button class="fine-use-button grid-button" onclick="toggleFullscreen()">
+            TOGGLE FULLSCREEN
+          </button>
+          <button class="fine-use-button grid-button" onclick="exportThemeData()">
+            EXPORT THEME DATA
+          </button>
+          <button class="fine-use-button grid-button" data-variant="info" onclick="window.open('https://github.com/your-repo/fine-use', '_blank')">
+            VIEW ON GITHUB
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    const themes = [
+      'github-dark', 'github-light', 'amber', 'gruvbox', 'monochrome', 
+      'monokai', 'newspaper', 'sakura', 'synthwave', 'vt220'
+    ];
+    
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Random theme function
+    function randomTheme() {
+      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+      document.documentElement.setAttribute('data-theme', randomTheme);
+      themeSelect.value = randomTheme;
+    }
+
+    // Fullscreen toggle
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Export theme data
+    function exportThemeData() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const themeData = {
+        name: currentTheme,
+        timestamp: new Date().toISOString(),
+        totalThemes: themes.length,
+        colors: {
+          bg: getComputedStyle(document.documentElement).getPropertyValue('--fine-use-bg'),
+          surface: getComputedStyle(document.documentElement).getPropertyValue('--fine-use-surface'),
+          border: getComputedStyle(document.documentElement).getPropertyValue('--fine-use-border'),
+          text: getComputedStyle(document.documentElement).getPropertyValue('--fine-use-text'),
+          accent: getComputedStyle(document.documentElement).getPropertyValue('--fine-use-accent')
+        }
+      };
+      
+      const dataStr = JSON.stringify(themeData, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `fine-use-${currentTheme}-theme.json`;
+      link.click();
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        randomTheme();
+      }
+      if (e.key === 'F11') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>

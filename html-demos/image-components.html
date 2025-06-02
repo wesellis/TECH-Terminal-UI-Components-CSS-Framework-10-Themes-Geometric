@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use - Image Components Demo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  <link rel="stylesheet" href="../components/css/fine-use-images.css">
+  
+  <!-- 10 Core Themes -->
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: var(--space-xxl);
+    }
+    
+    /* Enhanced theme selector with categories */
+    .theme-selector {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    
+    .theme-dropdown {
+      padding: var(--space-sm) var(--space-md);
+      border: var(--border-thin) solid var(--fine-use-border);
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      font-family: inherit;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 200px;
+    }
+    
+    .theme-dropdown optgroup {
+      background-color: var(--fine-use-border);
+      color: var(--fine-use-text);
+      font-weight: 700;
+      font-style: normal;
+    }
+    
+    .theme-dropdown option {
+      background-color: var(--fine-use-surface);
+      color: var(--fine-use-text);
+      padding: var(--space-xs);
+    }
+    
+    /* Enhanced network diagram */
+    .sample-network {
+      width: 100%;
+      height: 300px;
+      background-color: var(--fine-use-bg);
+      border: 2px solid var(--fine-use-border);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: var(--space-xl);
+      width: 80%;
+      height: 80%;
+      position: relative;
+    }
+    
+    .network-node {
+      background-color: var(--fine-use-accent);
+      border: 2px solid var(--fine-use-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--fine-use-bg);
+      font-size: var(--text-lg);
+      position: relative;
+    }
+    
+    .network-connection {
+      position: absolute;
+      background-color: var(--fine-use-border);
+      z-index: 1;
+    }
+    
+    .connection-h {
+      height: 2px;
+      width: calc(100% + var(--space-xl));
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+    }
+    
+    .connection-v {
+      width: 2px;
+      height: calc(100% + var(--space-xl));
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+    }
+    
+    /* Sample chart enhancement */
+    .sample-chart {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(
+        90deg,
+        var(--fine-use-success) 0%,
+        var(--fine-use-success) 25%,
+        var(--fine-use-warning) 25%,
+        var(--fine-use-warning) 50%,
+        var(--fine-use-error) 50%,
+        var(--fine-use-error) 75%,
+        var(--fine-use-info) 75%,
+        var(--fine-use-info) 100%
+      );
+      border: 2px solid var(--fine-use-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--fine-use-bg);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    
+    .chart-data-overlay {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background-color: var(--fine-use-bg);
+      color: var(--fine-use-text);
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--text-sm);
+      border: 1px solid var(--fine-use-border);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    
+    <!-- Organized Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">IMAGE COMPONENTS DEMO</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">THEMES:</span>
+        <span class="text-accent">10 ORGANIZED</span>
+        <span class="text-comment">PHILOSOPHY:</span>
+        <span class="text-success">FUNCTION FIRST</span>
+      </div>
+    </header>
+
+    <!-- Brand Component -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">BRAND & LOGO COMPONENTS</h2>
+      
+      <div class="grid-halves">
+        <div class="grid-column">
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">GEOMETRIC BRAND IDENTITY</h3>
+            
+            <div class="component-content">
+              <div class="fine-use-brand">
+                <div class="brand-symbol">
+                  <div class="brand-grid">
+                    <div class="grid-block"></div>
+                    <div class="grid-block active"></div>
+                    <div class="grid-block active"></div>
+                    <div class="grid-block"></div>
+                  </div>
+                </div>
+                <div class="brand-text">
+                  <div class="brand-name">SYSTEM CONTROL</div>
+                  <div class="brand-version">VERSION 2.1.0</div>
+                </div>
+              </div>
+              
+              <div style="margin-top: var(--space-xl);">
+                <div class="fine-use-brand">
+                  <div class="brand-symbol">
+                    <div class="brand-grid">
+                      <div class="grid-block active"></div>
+                      <div class="grid-block"></div>
+                      <div class="grid-block"></div>
+                      <div class="grid-block active"></div>
+                    </div>
+                  </div>
+                  <div class="brand-text">
+                    <div class="brand-name">TERMINAL INTERFACE</div>
+                    <div class="brand-version">BUILD 1.1.0</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="content-filler">
+                <span>Geometric logos maintain terminal precision</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-column">
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">ICON REPLACEMENTS</h3>
+            
+            <div class="component-content">
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); margin-bottom: var(--space-lg);">
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement icon-success">✓</div>
+                  <span class="text-lg">SUCCESS ACTION</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement icon-warning">!</div>
+                  <span class="text-lg">WARNING STATE</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement icon-error">×</div>
+                  <span class="text-lg">ERROR CONDITION</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement icon-info">i</div>
+                  <span class="text-lg">INFORMATION</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg);">
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement">SRV</div>
+                  <span class="text-lg">SERVER</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement">DB</div>
+                  <span class="text-lg">DATABASE</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement">NET</div>
+                  <span class="text-lg">NETWORK</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                  <div class="fine-use-icon-replacement">SYS</div>
+                  <span class="text-lg">SYSTEM</span>
+                </div>
+              </div>
+              
+              <div class="content-filler">
+                <span>Text-based icons maintain readability</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- User Avatar System -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">USER AVATAR SYSTEM</h2>
+      
+      <div class="grid-halves">
+        <div class="grid-column">
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">INDIVIDUAL USER CARDS</h3>
+            
+            <div class="component-content">
+              <div class="fine-use-avatar-grid">
+                <div class="user-avatar" data-status="online">
+                  <span class="avatar-initials">JD</span>
+                  <div class="avatar-status"></div>
+                </div>
+                <div class="user-info">
+                  <div class="user-name">JOHN DOE</div>
+                  <div class="user-role">SYSTEM ADMINISTRATOR</div>
+                </div>
+              </div>
+              
+              <div class="fine-use-avatar-grid" style="margin-top: var(--space-lg);">
+                <div class="user-avatar" data-status="away">
+                  <span class="avatar-initials">SM</span>
+                  <div class="avatar-status"></div>
+                </div>
+                <div class="user-info">
+                  <div class="user-name">SARAH MILLER</div>
+                  <div class="user-role">NETWORK ENGINEER</div>
+                </div>
+              </div>
+              
+              <div class="fine-use-avatar-grid" style="margin-top: var(--space-lg);">
+                <div class="user-avatar" data-status="offline">
+                  <span class="avatar-initials">RJ</span>
+                  <div class="avatar-status"></div>
+                </div>
+                <div class="user-info">
+                  <div class="user-name">ROBERT JONES</div>
+                  <div class="user-role">DATABASE ADMIN</div>
+                </div>
+              </div>
+              
+              <div class="content-filler">
+                <span>Rectangular avatars with status indicators</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-column">
+          <div class="fine-use-component">
+            <h3 class="fine-use-h3">TEAM OVERVIEW</h3>
+            
+            <div class="component-content">
+              <div class="fine-use-avatar-list">
+                <div class="avatar-list-item">
+                  <div class="user-avatar avatar-small" data-status="online">
+                    <span class="avatar-initials">AB</span>
+                    <div class="avatar-status"></div>
+                  </div>
+                  <div class="avatar-label">ADMIN</div>
+                </div>
+                <div class="avatar-list-item">
+                  <div class="user-avatar avatar-small" data-status="online">
+                    <span class="avatar-initials">CD</span>
+                    <div class="avatar-status"></div>
+                  </div>
+                  <div class="avatar-label">DEV</div>
+                </div>
+                <div class="avatar-list-item">
+                  <div class="user-avatar avatar-small" data-status="away">
+                    <span class="avatar-initials">EF</span>
+                    <div class="avatar-status"></div>
+                  </div>
+                  <div class="avatar-label">QA</div>
+                </div>
+                <div class="avatar-list-item">
+                  <div class="user-avatar avatar-small" data-status="offline">
+                    <span class="avatar-initials">GH</span>
+                    <div class="avatar-status"></div>
+                  </div>
+                  <div class="avatar-label">OPS</div>
+                </div>
+                <div class="avatar-list-item">
+                  <div class="user-avatar avatar-small" data-status="online">
+                    <span class="avatar-initials">IJ</span>
+                    <div class="avatar-status"></div>
+                  </div>
+                  <div class="avatar-label">SEC</div>
+                </div>
+                <div class="avatar-list-item">
+                  <div class="user-avatar avatar-small" data-status="busy">
+                    <span class="avatar-initials">KL</span>
+                    <div class="avatar-status"></div>
+                  </div>
+                  <div class="avatar-label">NET</div>
+                </div>
+              </div>
+              
+              <div class="content-filler">
+                <span>Grid layout for team visualization</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- System Diagrams -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">SYSTEM DIAGRAM VIEWER</h2>
+      
+      <div class="fine-use-diagram-viewer">
+        <div class="diagram-header">
+          <h3>NETWORK TOPOLOGY</h3>
+          <button class="diagram-fullscreen" onclick="toggleFullscreen(this)">FULLSCREEN</button>
+        </div>
+        <div class="diagram-container">
+          <div class="sample-network">
+            <div class="network-grid">
+              <div></div>
+              <div class="network-node">WEB
+                <div class="network-connection connection-h"></div>
+              </div>
+              <div class="network-node">API</div>
+              
+              <div></div>
+              <div class="network-node">LB
+                <div class="network-connection connection-v"></div>
+              </div>
+              <div></div>
+              
+              <div class="network-node">DB1</div>
+              <div></div>
+              <div class="network-node">DB2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chart Container -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">CHART & DATA VISUALIZATION</h2>
+      
+      <div class="grid-halves">
+        <div class="grid-column">
+          <div class="fine-use-chart-container">
+            <div class="chart-title">SYSTEM PERFORMANCE</div>
+            <div class="component-content">
+              <div class="sample-chart">
+                PERFORMANCE DATA
+                <div class="chart-data-overlay">CPU: 67% | MEM: 45%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-column">
+          <div class="fine-use-chart-container">
+            <div class="chart-title">NETWORK TRAFFIC</div>
+            <div class="component-content">
+              <div class="sample-chart">
+                TRAFFIC ANALYSIS
+                <div class="chart-data-overlay">IN: 1.2GB | OUT: 0.8GB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Controls -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">THEME DEMONSTRATION</h2>
+      
+      <div class="fine-use-component">
+        <div class="button-grid button-grid-2x2">
+          <button class="fine-use-button grid-button" data-variant="primary" onclick="randomDarkTheme()">
+            RANDOM DARK THEME
+          </button>
+          <button class="fine-use-button grid-button" onclick="randomLightTheme()">
+            RANDOM LIGHT THEME
+          </button>
+          <button class="fine-use-button grid-button" onclick="randomColorfulTheme()">
+            RANDOM COLORFUL THEME
+          </button>
+          <button class="fine-use-button grid-button" data-variant="info" onclick="randomRetroTheme()">
+            RANDOM RETRO THEME
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Organized theme arrays
+    const themes = {
+      dark: ['github-dark'],
+      light: ['github-light'],
+      colorful: ['sakura', 'synthwave'],
+      retro: ['amber', 'monochrome', 'monokai', 'vt220'],
+      modern: ['gruvbox', 'newspaper']
+    };
+    
+    const allThemes = ['github-dark', 'github-light', 'amber', 'gruvbox', 'monochrome', 'monokai', 'newspaper', 'sakura', 'synthwave', 'vt220'];
+    
+    const themeSelect = document.getElementById('theme-select');
+    
+    themeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-theme', e.target.value);
+    });
+
+    // Category-specific random theme functions
+    function randomDarkTheme() {
+      const randomTheme = themes.dark[Math.floor(Math.random() * themes.dark.length)];
+      document.documentElement.setAttribute('data-theme', randomTheme);
+      themeSelect.value = randomTheme;
+    }
+    
+    function randomLightTheme() {
+      const randomTheme = themes.light[Math.floor(Math.random() * themes.light.length)];
+      document.documentElement.setAttribute('data-theme', randomTheme);
+      themeSelect.value = randomTheme;
+    }
+    
+    function randomColorfulTheme() {
+      const randomTheme = themes.colorful[Math.floor(Math.random() * themes.colorful.length)];
+      document.documentElement.setAttribute('data-theme', randomTheme);
+      themeSelect.value = randomTheme;
+    }
+    
+    function randomRetroTheme() {
+      const randomTheme = themes.retro[Math.floor(Math.random() * themes.retro.length)];
+      document.documentElement.setAttribute('data-theme', randomTheme);
+      themeSelect.value = randomTheme;
+    }
+
+    function toggleFullscreen(button) {
+      if (button.textContent === 'FULLSCREEN') {
+        button.textContent = 'EXIT FULLSCREEN';
+        button.parentElement.parentElement.style.position = 'fixed';
+        button.parentElement.parentElement.style.top = '0';
+        button.parentElement.parentElement.style.left = '0';
+        button.parentElement.parentElement.style.width = '100vw';
+        button.parentElement.parentElement.style.height = '100vh';
+        button.parentElement.parentElement.style.zIndex = '999';
+      } else {
+        button.textContent = 'FULLSCREEN';
+        button.parentElement.parentElement.style.position = 'static';
+        button.parentElement.parentElement.style.width = 'auto';
+        button.parentElement.parentElement.style.height = 'auto';
+        button.parentElement.parentElement.style.zIndex = 'auto';
+      }
+    }
+
+    // Keyboard shortcuts for theme categories
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '1' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        randomDarkTheme();
+      }
+      if (e.key === '2' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        randomLightTheme();
+      }
+      if (e.key === '3' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        randomColorfulTheme();
+      }
+      if (e.key === '4' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        randomRetroTheme();
+      }
+    });
+  </script>
+</body>
+</html>

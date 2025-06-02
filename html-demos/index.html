@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="github-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fine Use Design System - Live Demo</title>
+  
+  <!-- Fira Code Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Fine Use CSS -->
+  <link rel="stylesheet" href="../components/css/fine-use-core.css">
+  <link rel="stylesheet" href="../themes/github-dark.css">
+  <link rel="stylesheet" href="../themes/github-light.css">
+  <link rel="stylesheet" href="../themes/amber.css">
+  <link rel="stylesheet" href="../themes/gruvbox.css">
+  <link rel="stylesheet" href="../themes/monochrome.css">
+  <link rel="stylesheet" href="../themes/monokai.css">
+  <link rel="stylesheet" href="../themes/newspaper.css">
+  <link rel="stylesheet" href="../themes/sakura.css">
+  <link rel="stylesheet" href="../themes/synthwave.css">
+  <link rel="stylesheet" href="../themes/vt220.css">
+  
+  <style>
+    /* Additional demo styles */
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xxl);
+    }
+    
+    .demo-section {
+      margin-bottom: 3rem;
+    }
+    
+    .demo-grid {
+      display: grid;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .demo-thirds { grid-template-columns: 1fr 1fr 1fr; }
+    .demo-halves { grid-template-columns: 1fr 1fr; }
+    .demo-main-sidebar { grid-template-columns: 2fr 1fr; }
+    
+    .live-value {
+      transition: all 300ms ease;
+    }
+    
+    /* Animation for new log entries */
+    @keyframes newEntry {
+      0% { background-color: var(--fine-use-accent); color: var(--fine-use-bg); }
+      100% { background-color: var(--fine-use-surface); color: var(--fine-use-text); }
+    }
+    
+    .log-entry.new {
+      animation: newEntry 1s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+  <div class="fine-use-app" id="app">
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+      <span class="theme-label">THEME:</span>
+      <select id="theme-select" class="theme-dropdown">
+        <option value="github-dark" selected>Dark Mode</option>
+        <option value="github-light">Light Mode</option>
+        <option value="amber">Amber Terminal</option>
+        <option value="gruvbox">Gruvbox</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="monokai">Monokai</option>
+        <option value="newspaper">Newspaper</option>
+        <option value="sakura">Sakura</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="vt220">VT220</option>
+      </select>
+    </div>
+
+    <!-- Main Header -->
+    <header class="demo-section">
+      <h1 class="fine-use-h1">FINE USE DESIGN SYSTEM</h1>
+      <div class="flex items-center gap-8 text-lg">
+        <span class="text-comment">VERSION:</span>
+        <span class="text-white">1.1.0</span>
+        <span class="text-comment">TIME:</span>
+        <span class="text-white" id="current-time">--:--:--</span>
+        <span class="text-comment">STATUS:</span>
+        <span class="text-success">OPERATIONAL</span>
+        <span class="text-comment">DEMO MODE:</span>
+        <span class="text-info">ACTIVE</span>
+      </div>
+    </header>
+
+    <!-- Live Metrics Section -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">REAL-TIME SYSTEM METRICS</h2>
+      
+      <div class="demo-grid demo-thirds">
+        <!-- CPU Graph -->
+        <div class="fine-use-graph">
+          <div class="graph-header">
+            <h3>CPU USAGE</h3>
+            <span class="current-value live-value" id="cpu-value">--</span>
+          </div>
+          <div class="graph-container">
+            <div class="graph-bars" id="cpu-graph"></div>
+          </div>
+        </div>
+
+        <!-- Memory Graph -->
+        <div class="fine-use-graph">
+          <div class="graph-header">
+            <h3>MEMORY USAGE</h3>
+            <span class="current-value live-value" id="memory-value">--</span>
+          </div>
+          <div class="graph-container">
+            <div class="graph-bars" id="memory-graph"></div>
+          </div>
+        </div>
+
+        <!-- Network Graph -->
+        <div class="fine-use-graph">
+          <div class="graph-header">
+            <h3>NETWORK I/O</h3>
+            <span class="current-value live-value" id="network-value">--</span>
+          </div>
+          <div class="graph-container">
+            <div class="graph-bars" id="network-graph"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bars -->
+      <div class="fine-use-progress-group">
+        <div class="fine-use-progress-item" id="cpu-progress">
+          <label class="progress-label">CPU LOAD</label>
+          <div class="progress-container">
+            <div class="progress-bar status-success" style="width: 0%"></div>
+          </div>
+          <span class="progress-value">0%</span>
+        </div>
+        
+        <div class="fine-use-progress-item" id="memory-progress">
+          <label class="progress-label">MEMORY USAGE</label>
+          <div class="progress-container">
+            <div class="progress-bar status-success" style="width: 0%"></div>
+          </div>
+          <span class="progress-value">0%</span>
+        </div>
+        
+        <div class="fine-use-progress-item" id="disk-progress">
+          <label class="progress-label">DISK I/O</label>
+          <div class="progress-container">
+            <div class="progress-bar status-success" style="width: 0%"></div>
+          </div>
+          <span class="progress-value">0%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Table Section -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">SERVICE MONITORING MATRIX</h2>
+      
+      <div class="fine-use-data-table">
+        <div class="table-header">
+          <h3>SYSTEM SERVICES STATUS</h3>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>SERVICE ID</th>
+                <th>NAME</th>
+                <th>STATUS</th>
+                <th>CPU</th>
+                <th>MEMORY</th>
+                <th>UPTIME</th>
+              </tr>
+            </thead>
+            <tbody id="services-table">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Log Terminals Section -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">LIVE DATA STREAMS</h2>
+      
+      <div class="demo-grid demo-halves">
+        <!-- System Log -->
+        <div class="fine-use-log-terminal">
+          <div class="terminal-header">
+            <h3>SYSTEM EVENT LOG</h3>
+            <div class="terminal-controls">
+              <button class="control-button" id="log-pause">PAUSE</button>
+              <button class="control-button" id="log-clear">CLEAR</button>
+            </div>
+          </div>
+          <div class="terminal-content" id="system-log">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Operations Log -->
+        <div class="fine-use-log-terminal">
+          <div class="terminal-header">
+            <h3>OPERATIONS STREAM</h3>
+            <div class="terminal-controls">
+              <button class="control-button" id="ops-pause">PAUSE</button>
+              <button class="control-button" id="ops-clear">CLEAR</button>
+            </div>
+          </div>
+          <div class="terminal-content" id="operations-log">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Control Panels Section -->
+    <section class="demo-section">
+      <h2 class="fine-use-h2">SYSTEM CONTROL PANELS</h2>
+      
+      <div class="demo-grid demo-thirds">
+        <!-- System Controls -->
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">SYSTEM CONTROLS</h3>
+          <div class="button-grid button-grid-2x2">
+            <button class="fine-use-button grid-button" data-variant="primary">
+              START SERVICES
+            </button>
+            <button class="fine-use-button grid-button">
+              STOP ALL PROCESSES
+            </button>
+            <button class="fine-use-button grid-button">
+              RESTART LOAD BALANCER
+            </button>
+            <button class="fine-use-button grid-button" data-variant="danger">
+              EMERGENCY SHUTDOWN
+            </button>
+          </div>
+        </div>
+
+        <!-- Feature Toggles -->
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">FEATURE TOGGLES</h3>
+          <div class="space-y-6" id="toggles-container">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Service Status -->
+        <div class="fine-use-component">
+          <h3 class="fine-use-h3">SERVICE STATUS</h3>
+          <div class="space-y-4" id="service-status-container">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 border-t-4" style="border-color: var(--fine-use-border);">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-12 text-lg">
+          <div>
+            <span class="text-comment">SESSION:</span>
+            <span class="text-white ml-3 font-bold" id="session-time">00:00:00</span>
+          </div>
+          <div>
+            <span class="text-comment">THEMES:</span>
+            <span class="text-info ml-3 font-bold">10</span>
+          </div>
+          <div>
+            <span class="text-comment">UPDATES:</span>
+            <span class="text-success ml-3 font-bold" id="update-count">0</span>
+          </div>
+        </div>
+        <div class="flex gap-6">
+          <button class="fine-use-button" data-variant="primary" id="refresh-demo">
+            REFRESH DEMO
+          </button>
+          <button class="fine-use-button" id="export-data">
+            EXPORT DATA
+          </button>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Demo application state
+    const DemoApp = {
+      theme: 'github-dark',
+      startTime: Date.now(),
+      updateCount: 0,
+      isPaused: { system: false, operations: false },
+      
+      // Data generators
+      generateMetric: () => Math.floor(Math.random() * 100),
+      generateCpuHistory: () => Array(20).fill(0).map(() => Math.floor(Math.random() * 100)),
+      
+      // Services data
+      services: [
+        { id: 'SRV001', name: 'auth-gateway', status: 'ONLINE', cpu: 23, memory: 45, uptime: '7d 12h' },
+        { id: 'SRV002', name: 'data-processor', status: 'ONLINE', cpu: 67, memory: 78, uptime: '3d 8h' },
+        { id: 'SRV003', name: 'cache-layer', status: 'WARNING', cpu: 89, memory: 92, uptime: '1d 2h' },
+        { id: 'SRV004', name: 'analytics-engine', status: 'ONLINE', cpu: 34, memory: 56, uptime: '14d 6h' },
+        { id: 'SRV005', name: 'notification-hub', status: 'ERROR', cpu: 95, memory: 87, uptime: '0d 0h' }
+      ],
+      
+      // Feature toggles
+      toggles: [
+        { label: 'AUTO SCALING', enabled: true },
+        { label: 'DEBUG MODE', enabled: false },
+        { label: 'CACHE LAYER', enabled: true },
+        { label: 'RATE LIMITING', enabled: true },
+        { label: 'MONITORING', enabled: false }
+      ],
+      
+      // Service status
+      serviceStatuses: [
+        { name: 'AUTHENTICATION', status: 'operational', uptime: '99.9%' },
+        { name: 'PAYMENT GATEWAY', status: 'operational', uptime: '99.7%' },
+        { name: 'FILE STORAGE', status: 'degraded', uptime: '97.2%' },
+        { name: 'EMAIL SERVICE', status: 'maintenance', uptime: '0.0%' }
+      ],
+      
+      // Logs
+      systemLogs: [],
+      operationLogs: []
+    };
+
+    // Utility functions
+    const formatTime = (date) => date.toLocaleTimeString('en-US', { hour12: false });
+    
+    const getStatusColor = (value, thresholds = [70, 85]) => {
+      if (value >= thresholds[1]) return '#ff5555';
+      if (value >= thresholds[0]) return '#f1fa8c';
+      return '#50fa7b';
+    };
+
+    const getStatusClass = (value, thresholds = [70, 85]) => {
+      if (value >= thresholds[1]) return 'status-error';
+      if (value >= thresholds[0]) return 'status-warning';
+      return 'status-success';
+    };
+
+    // Theme management
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      DemoApp.theme = e.target.value;
+      document.documentElement.setAttribute('data-theme', DemoApp.theme);
+    });
+
+    // Update time display
+    const updateTime = () => {
+      const now = new Date();
+      document.getElementById('current-time').textContent = formatTime(now);
+      
+      const elapsed = Math.floor((Date.now() - DemoApp.startTime) / 1000);
+      const hours = Math.floor(elapsed / 3600);
+      const minutes = Math.floor((elapsed % 3600) / 60);
+      const seconds = elapsed % 60;
+      document.getElementById('session-time').textContent = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    // Update progress bars
+    const updateProgressBar = (id, value) => {
+      const container = document.getElementById(id);
+      const bar = container.querySelector('.progress-bar');
+      const valueSpan = container.querySelector('.progress-value');
+      
+      bar.style.width = `${value}%`;
+      bar.className = `progress-bar ${getStatusClass(value)}`;
+      valueSpan.textContent = `${value}%`;
+      valueSpan.className = `progress-value ${getStatusClass(value)}`;
+    };
+
+    // Update graphs
+    const updateGraph = (id, data, currentValue) => {
+      const container = document.getElementById(id);
+      const valueSpan = document.getElementById(id.replace('-graph', '-value'));
+      
+      if (valueSpan) {
+        valueSpan.textContent = `${currentValue}%`;
+        valueSpan.style.color = getStatusColor(currentValue);
+      }
+      
+      const max = Math.max(...data);
+      const min = Math.min(...data);
+      const range = max - min || 1;
+      
+      container.innerHTML = data.map(value => {
+        const height = ((value - min) / range) * 100;
+        const color = getStatusColor(value);
+        return `<div class="graph-bar" style="height: ${height}%; background-color: ${color}; flex: 1; transition: height 300ms ease; min-height: 2px;"></div>`;
+      }).join('');
+    };
+
+    // Add log entry
+    const addLogEntry = (containerId, level, message, isPaused) => {
+      if (isPaused) return;
+      
+      const container = document.getElementById(containerId);
+      const timestamp = formatTime(new Date());
+      
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${level.toLowerCase()} new`;
+      entry.innerHTML = `
+        <span class="log-timestamp">[${timestamp}]</span>
+        <span class="log-level level-${level.toLowerCase()}">${level}</span>
+        <span class="log-message">${message}</span>
+      `;
+      
+      container.insertBefore(entry, container.firstChild);
+      
+      // Remove old entries
+      const entries = container.querySelectorAll('.log-entry');
+      if (entries.length > 20) {
+        container.removeChild(entries[entries.length - 1]);
+      }
+      
+      // Remove new class after animation
+      setTimeout(() => {
+        entry.classList.remove('new');
+      }, 1000);
+    };
+
+    // Render services table
+    const renderServicesTable = () => {
+      const tbody = document.getElementById('services-table');
+      tbody.innerHTML = DemoApp.services.map(service => `
+        <tr>
+          <td class="service-id">${service.id}</td>
+          <td>${service.name}</td>
+          <td>
+            <span class="status-badge status-${service.status.toLowerCase()}">
+              ${service.status}
+            </span>
+          </td>
+          <td class="metric-value metric-${getStatusClass(service.cpu).replace('status-', '')}">${service.cpu}%</td>
+          <td class="metric-value metric-${getStatusClass(service.memory).replace('status-', '')}">${service.memory}%</td>
+          <td>${service.uptime}</td>
+        </tr>
+      `).join('');
+    };
+
+    // Render toggles
+    const renderToggles = () => {
+      const container = document.getElementById('toggles-container');
+      container.innerHTML = DemoApp.toggles.map((toggle, index) => `
+        <div class="fine-use-toggle">
+          <label class="toggle-label">${toggle.label}</label>
+          <div class="toggle-status" style="color: ${toggle.enabled ? 'var(--fine-use-success)' : 'var(--fine-use-error)'}">
+            ${toggle.enabled ? 'ON' : 'OFF'}
+          </div>
+          <div class="toggle-switch">
+            <button class="toggle-button toggle-on ${toggle.enabled ? 'active' : ''}" 
+                    onclick="toggleFeature(${index}, true)"
+                    style="background-color: ${toggle.enabled ? 'var(--fine-use-success)' : 'var(--fine-use-surface)'}; color: ${toggle.enabled ? 'var(--fine-use-bg)' : 'var(--fine-use-comment)'}">
+              ON
+            </button>
+            <button class="toggle-button toggle-off ${!toggle.enabled ? 'active' : ''}" 
+                    onclick="toggleFeature(${index}, false)"
+                    style="background-color: ${!toggle.enabled ? 'var(--fine-use-error)' : 'var(--fine-use-surface)'}; color: ${!toggle.enabled ? 'var(--fine-use-bg)' : 'var(--fine-use-comment)'}">
+              OFF
+            </button>
+          </div>
+        </div>
+      `).join('');
+    };
+
+    // Render service status
+    const renderServiceStatus = () => {
+      const container = document.getElementById('service-status-container');
+      container.innerHTML = DemoApp.serviceStatuses.map(service => `
+        <div class="fine-use-service-status">
+          <div class="status-indicator-box" data-status="${service.status}"></div>
+          <div class="service-info">
+            <div class="service-name">${service.name}</div>
+            <div class="service-uptime">${service.uptime}</div>
+          </div>
+          <div class="status-label status-${service.status}">
+            ${service.status.toUpperCase()}
+          </div>
+        </div>
+      `).join('');
+    };
+
+    // Toggle feature function
+    window.toggleFeature = (index, state) => {
+      DemoApp.toggles[index].enabled = state;
+      renderToggles();
+    };
+
+    // Event listeners
+    document.getElementById('log-pause').addEventListener('click', (e) => {
+      DemoApp.isPaused.system = !DemoApp.isPaused.system;
+      e.target.textContent = DemoApp.isPaused.system ? 'RESUME' : 'PAUSE';
+      e.target.classList.toggle('active', DemoApp.isPaused.system);
+    });
+
+    document.getElementById('ops-pause').addEventListener('click', (e) => {
+      DemoApp.isPaused.operations = !DemoApp.isPaused.operations;
+      e.target.textContent = DemoApp.isPaused.operations ? 'RESUME' : 'PAUSE';
+      e.target.classList.toggle('active', DemoApp.isPaused.operations);
+    });
+
+    document.getElementById('log-clear').addEventListener('click', () => {
+      document.getElementById('system-log').innerHTML = '';
+    });
+
+    document.getElementById('ops-clear').addEventListener('click', () => {
+      document.getElementById('operations-log').innerHTML = '';
+    });
+
+    document.getElementById('refresh-demo').addEventListener('click', () => {
+      location.reload();
+    });
+
+    // Demo data generation
+    const systemMessages = [
+      'Service mesh configuration updated',
+      'Memory threshold exceeded',
+      'Connection pool exhausted',
+      'Cache invalidation triggered',
+      'Security scan initiated',
+      'Load balancer reconfigured'
+    ];
+
+    const operationMessages = [
+      'Service deployment completed',
+      'Database backup initiated',
+      'Load balancer restart',
+      'Cache flush operation',
+      'Security patch applied',
+      'Configuration sync'
+    ];
+
+    // Main update loop
+    const updateDemo = () => {
+      // Update time
+      updateTime();
+      
+      // Update metrics
+      const cpu = DemoApp.generateMetric();
+      const memory = DemoApp.generateMetric();
+      const disk = DemoApp.generateMetric();
+      
+      updateProgressBar('cpu-progress', cpu);
+      updateProgressBar('memory-progress', memory);
+      updateProgressBar('disk-progress', disk);
+      
+      // Update graphs
+      updateGraph('cpu-graph', DemoApp.generateCpuHistory(), cpu);
+      updateGraph('memory-graph', DemoApp.generateCpuHistory(), memory);
+      updateGraph('network-graph', DemoApp.generateCpuHistory(), disk);
+      
+      // Update services (occasionally)
+      if (Math.random() < 0.1) {
+        DemoApp.services.forEach(service => {
+          service.cpu = Math.max(5, Math.min(100, service.cpu + (Math.random() - 0.5) * 10));
+          service.memory = Math.max(5, Math.min(100, service.memory + (Math.random() - 0.5) * 8));
+        });
+        renderServicesTable();
+      }
+      
+      // Add log entries (occasionally)
+      if (Math.random() < 0.3) {
+        const levels = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
+        const level = levels[Math.floor(Math.random() * levels.length)];
+        const message = systemMessages[Math.floor(Math.random() * systemMessages.length)];
+        addLogEntry('system-log', level, message, DemoApp.isPaused.system);
+      }
+      
+      if (Math.random() < 0.2) {
+        const levels = ['INFO', 'SUCCESS', 'ERROR'];
+        const level = levels[Math.floor(Math.random() * levels.length)];
+        const message = operationMessages[Math.floor(Math.random() * operationMessages.length)];
+        addLogEntry('operations-log', level, message, DemoApp.isPaused.operations);
+      }
+      
+      // Update counter
+      DemoApp.updateCount++;
+      document.getElementById('update-count').textContent = DemoApp.updateCount;
+    };
+
+    // Initialize demo
+    const initDemo = () => {
+      renderServicesTable();
+      renderToggles();
+      renderServiceStatus();
+      updateTime();
+      
+      // Start update loop
+      setInterval(updateDemo, 2000);
+      setInterval(updateTime, 1000);
+    };
+
+    // Start when page loads
+    document.addEventListener('DOMContentLoaded', initDemo);
+  </script>
+</body>
+</html>
