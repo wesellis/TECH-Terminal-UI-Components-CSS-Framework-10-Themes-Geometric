@@ -1,5 +1,5 @@
 {
-  "name": "fine-use-design-system",
+  "name": "terminal-ui-components",
   "version": "1.2.0",
   "description": "A terminal-inspired interface design system prioritizing functional density, real-time data visualization, and uncompromising geometric precision",
   "main": "components/css/fine-use-core.css",
@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wesellis/fine-use-design-system.git"
+    "url": "https://github.com/wesellis/terminal-ui-components.git"
   },
   "keywords": [
     "design-system",
@@ -57,7 +57,7 @@
   "author": "Wesley Ellis <wes@wesellis.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wesellis/fine-use-design-system/issues"
+    "url": "https://github.com/wesellis/terminal-ui-components/issues"
   },
   "homepage": "https://fine-use.dev",
   "engines": {
