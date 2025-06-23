@@ -1,10 +1,37 @@
-# Fine Use Design System v1.2.0
+# 🖥️ Fine Use Design System v1.2.0
+
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Components](https://img.shields.io/badge/Components-55+-blue.svg)](#components)
+[![Themes](https://img.shields.io/badge/Themes-10-purple.svg)](#themes)
+[![Pro Version](https://img.shields.io/badge/Pro-$39-gold.svg)](https://gumroad.com/l/fine-use-pro)
 
 **Terminal-inspired interface design with uncompromising geometric precision**
 
 ## Overview
 
 Fine Use is a **production-ready design system** for building terminal-inspired interfaces that prioritize **functional density, real-time data visualization, and geometric precision**. Perfect for dashboards, monitoring tools, developer interfaces, and professional applications.
+
+## 💵 Pricing
+
+### Open Source (Free)
+- All 55+ components
+- 10 professional themes
+- Basic documentation
+- Community support
+- MIT license
+
+### Pro Version - $39 (One-time)
+- Everything in Open Source
+- **Figma design files**
+- **React component library**
+- **Vue component library**
+- **Extended documentation**
+- **Video tutorials**
+- **Priority support**
+- **Commercial license**
+- **Updates for 1 year**
+
+**[🛒 Get Pro Version →](https://gumroad.com/l/fine-use-pro)**
 
 ## ✨ Key Features
 
@@ -14,6 +41,26 @@ Fine Use is a **production-ready design system** for building terminal-inspired 
 - **♿ Fully Accessible** - WCAG 2.1 AA compliant
 - **📐 Geometric Precision** - Mathematical layouts, zero rounded corners
 - **🔤 Terminal Aesthetics** - Monospace fonts, thick borders, high contrast
+
+## 🎯 Why Choose Fine Use?
+
+### For Developers
+- **Zero dependencies** - Pure CSS, works everywhere
+- **Framework agnostic** - Use with React, Vue, Angular, or vanilla
+- **Performance first** - <50KB total size
+- **Fully customizable** - CSS variables for everything
+
+### For Designers
+- **Consistent system** - Mathematical precision
+- **Real Figma files** (Pro) - Not just exports
+- **Living documentation** - Always up to date
+- **Accessibility built-in** - WCAG 2.1 AA compliant
+
+### For Business
+- **Save weeks of development** - Ready-to-use components
+- **Professional appearance** - Enterprise-grade design
+- **Reduce design debt** - Consistent across teams
+- **Future-proof** - Regular updates and support
 
 ## 🚀 Quick Start
 
