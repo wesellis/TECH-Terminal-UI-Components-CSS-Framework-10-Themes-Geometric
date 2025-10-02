@@ -2,8 +2,10 @@
 
 Pure CSS framework for building terminal-style interfaces with geometric design patterns.
 
-[![CSS](https://img.shields.io/badge/CSS3-Framework-1572B6?style=flat-square&logo=css3)](https://www.w3.org/Style/CSS/)
+[![CSS](https://img.shields.io/badge/CSS3-Framework-1572B6?style=flat-square&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/wesellis/TECH-Terminal-UI-Components-CSS-Framework-10-Themes-Geometric?style=flat-square)](https://github.com/wesellis/TECH-Terminal-UI-Components-CSS-Framework-10-Themes-Geometric/stargazers)
+[![Last Commit](https://img.shields.io/github/last-commit/wesellis/TECH-Terminal-UI-Components-CSS-Framework-10-Themes-Geometric?style=flat-square)](https://github.com/wesellis/TECH-Terminal-UI-Components-CSS-Framework-10-Themes-Geometric/commits)
 
 ## Overview
 
