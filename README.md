@@ -1,29 +1,28 @@
-# 🎨 Terminal UI Components CSS Framework
-### Geometric Design System with 10 Themes
+# Terminal UI Components CSS Framework
 
-[![CSS](https://img.shields.io/badge/CSS3-Framework-1572B6?style=for-the-badge&logo=css3)](https://www.w3.org/Style/CSS/)
-[![Themes](https://img.shields.io/badge/Themes-10-FF6B6B?style=for-the-badge)](https://github.com)
-[![Components](https://img.shields.io/badge/Components-45+-brightgreen?style=for-the-badge)](https://github.com)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+Pure CSS framework for building terminal-style interfaces with geometric design patterns.
 
-## 🎯 Overview
+[![CSS](https://img.shields.io/badge/CSS3-Framework-1572B6?style=flat-square&logo=css3)](https://www.w3.org/Style/CSS/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-Pure CSS framework for building terminal-style interfaces with geometric design patterns. No JavaScript required. 45+ components, 10 themes, and fully customizable. Perfect for developer tools, retro UIs, and command-line web apps.
+## Overview
 
-### 📊 What's Included
+A collection of CSS components and themes for creating terminal-style user interfaces. No JavaScript required - everything is built with pure CSS. Includes multiple color themes and geometric design elements.
 
-- **45+ Components** - Buttons, inputs, cards, modals, etc.
-- **10 Color Themes** - From classic green to cyberpunk
-- **Geometric Patterns** - Unique visual style
-- **Zero Dependencies** - Pure CSS, no JavaScript
-- **Responsive** - Works on all screen sizes
-- **Accessible** - WCAG compliant
+## Features
 
-## ⚡ Quick Start
+- **Multiple Components** - Buttons, inputs, cards, modals, tables, alerts
+- **10 Color Themes** - Classic green, Matrix, Cyberpunk, Dracula, Nord, and more
+- **Geometric Patterns** - ASCII art decorations and geometric shapes
+- **Zero Dependencies** - Pure CSS, no JavaScript required
+- **Responsive** - Mobile-first design approach
+- **Customizable** - CSS variables for easy theming
+
+## Quick Start
 
 ```html
 <!-- Include CSS -->
-<link rel="stylesheet" href="terminal-ui.min.css">
+<link rel="stylesheet" href="terminal-ui.css">
 
 <!-- Apply theme -->
 <body class="theme-matrix">
@@ -37,32 +36,31 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 </body>
 ```
 
-## 🎨 Themes
+## Themes
 
-### Available Themes
+Available themes:
 - `theme-classic` - Green on black
-- `theme-matrix` - Matrix green rain
+- `theme-matrix` - Matrix green
 - `theme-amber` - Retro amber CRT
 - `theme-cyberpunk` - Neon pink/blue
-- `theme-dracula` - Purple vampire
+- `theme-dracula` - Purple palette
 - `theme-nord` - Arctic blue
 - `theme-synthwave` - 80s aesthetic
 - `theme-monochrome` - Black and white
 - `theme-solarized` - Solarized dark
 - `theme-custom` - Build your own
 
-### Theme Switcher
+Switch themes by changing the body class:
 ```html
-<select onchange="document.body.className = this.value">
-  <option value="theme-classic">Classic</option>
-  <option value="theme-matrix">Matrix</option>
-  <option value="theme-cyberpunk">Cyberpunk</option>
-</select>
+<body class="theme-cyberpunk">
+  <!-- Your content -->
+</body>
 ```
 
-## 📦 Components
+## Components
 
 ### Terminal Window
+
 ```html
 <div class="terminal-window">
   <div class="terminal-header">
@@ -80,6 +78,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Buttons
+
 ```html
 <!-- Primary button -->
 <button class="btn btn-primary">[Execute]</button>
@@ -96,6 +95,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Forms
+
 ```html
 <div class="form-group">
   <label class="form-label">Username:</label>
@@ -112,6 +112,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Cards
+
 ```html
 <div class="card geometric">
   <div class="card-corner top-left">◢</div>
@@ -127,6 +128,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Progress Bars
+
 ```html
 <!-- ASCII progress -->
 <div class="progress">
@@ -144,6 +146,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Tables
+
 ```html
 <table class="table-terminal">
   <thead>
@@ -164,6 +167,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Alerts
+
 ```html
 <!-- Success -->
 <div class="alert alert-success">
@@ -183,9 +187,10 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 </div>
 ```
 
-## 🎯 Geometric Elements
+## Geometric Elements
 
 ### Decorative Patterns
+
 ```html
 <!-- Corner decorations -->
 <div class="geometric-box">
@@ -207,9 +212,10 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 </div>
 ```
 
-## 🛠️ Customization
+## Customization
 
 ### CSS Variables
+
 ```css
 :root {
   --term-bg: #0a0e27;
@@ -222,6 +228,7 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 ```
 
 ### Custom Theme
+
 ```css
 .theme-custom {
   --term-bg: #1a1a2e;
@@ -232,12 +239,12 @@ Pure CSS framework for building terminal-style interfaces with geometric design 
 }
 ```
 
-## 📱 Responsive
+## Responsive Design
 
-All components are responsive by default:
+All components use a mobile-first approach:
 
 ```css
-/* Mobile first approach */
+/* Mobile first */
 .terminal-window {
   width: 100%;
 }
@@ -257,9 +264,10 @@ All components are responsive by default:
 }
 ```
 
-## 🎨 Effects
+## CSS Effects
 
 ### Animations
+
 ```html
 <!-- Blinking cursor -->
 <span class="blink">_</span>
@@ -274,60 +282,35 @@ All components are responsive by default:
 <div class="matrix-rain"></div>
 ```
 
-### Utilities
+### Utility Classes
+
 ```css
 .text-glow { text-shadow: 0 0 10px currentColor; }
-.scanlines { background: repeating-linear-gradient(...); }
-.crt-effect { animation: crt-flicker 0.1s infinite; }
+.scanlines { /* CRT scanline effect */ }
+.crt-effect { /* CRT flicker animation */ }
 .pixelated { image-rendering: pixelated; }
 ```
 
-## 📈 Performance
+## Project Structure
 
-- **File Size**: 28KB minified, 6KB gzipped
-- **No JavaScript**: Pure CSS solution
-- **GPU Accelerated**: Transform animations
-- **Optimized**: Single file, no requests
-
-## 🔧 Build Tools
-
-```bash
-# Install
-npm install terminal-ui-css
-
-# Import in CSS
-@import 'terminal-ui-css';
-
-# Or in JavaScript
-import 'terminal-ui-css/dist/terminal-ui.min.css';
+```
+terminal-ui-css/
+├── themes/              # Color theme files
+├── components/          # Individual component styles
+├── scripts/             # Build scripts
+├── html-demos/          # Example HTML files
+├── documentation/       # Component documentation
+└── future-versions/     # Experimental features
 ```
 
-## 📚 Documentation
+## Contributing
 
-Full docs with examples: [terminal-ui.dev](https://terminal-ui.dev)
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-- [Component Gallery](https://terminal-ui.dev/components)
-- [Theme Builder](https://terminal-ui.dev/themes)
-- [Code Examples](https://terminal-ui.dev/examples)
-- [Playground](https://terminal-ui.dev/playground)
+## License
 
-## 🤝 Contributing
-
-PRs welcome! See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## 📜 License
-
-MIT License - Free for all projects
+MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-<div align="center">
-
-**Build Terminal UIs with Pure CSS**
-
-[![Download](https://img.shields.io/badge/Download-CSS-brightgreen?style=for-the-badge)](https://github.com/yourusername/terminal-ui-css/releases)
-[![Demo](https://img.shields.io/badge/View-Demo-blue?style=for-the-badge)](https://terminal-ui.dev/demo)
-
-*Lightweight • No Dependencies • Geometric Design*
-
-</div>
+**Note**: This is a portfolio/demonstration project showcasing CSS terminal UI design patterns.
